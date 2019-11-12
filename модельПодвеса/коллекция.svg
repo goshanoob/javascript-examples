@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="стиль.css" type="text/css"?>
+<svg version="1.1" width="500" height="300" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(40,30)">
+   <path id="шарнир" d="m10,20 l 0,-20 m-10,0 l 20,0 m-10,20 l 0,20 m-10,0 l 20,0 m-5,-5 l0,-30 m-10,0 l 0,30" transform="translate(-10,-20)"/>
+   <circle r="1.5"/>
+   <text x="-28" y="42">Шарнир</text>
+  </g>
+  <g transform="translate(110,30)">
+   <path id="шип" d="m0,0 l 20,0 a 10,10 0 0,1 20,0 l 20,0" transform="translate(-30,0)"/>
+   <text x="-15" y="42">Шип</text>
+  </g>
+  <g transform="translate(185,30)">
+   <path id="земля" d="m0,8  8,-8 m0,8  8,-8 m0,8 8,-8 m0,8  8,-8 m0,8  8,-8 m0,8  8,-8 m0,8  8,-8" transform="translate(-24,-4)"/>
+   <text x="-17" y="42">Земля</text>
+  </g>
+  <g transform="translate(250,30)">
+   <g id="звено" >
+   <circle r="5"/>
+   <line x1="5" x2="40"/>
+   </g>
+   <text x="-5" y="42">Звено</text>
+  </g>
+  
+  <g transform="translate(335,30)">
+   <g id="разрыв" transform="translate(-20,0)">
+    <path d="m0,0 c0,-7 20,-7 20,0 0,7 20,7 20,0"/>
+   </g>
+   <text x="-5" y="42">Разрыв</text>
+  </g>
+  
+</svg>

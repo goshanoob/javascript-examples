@@ -1,0 +1,106 @@
+<html>
+ <body>
+  <canvas id="canv" width="500" height="500" style="border: 4px solid black"> </canvas>
+<!--   <input id="widthGround" type="range" value="500" step="10" max="1000" min="100">
+  <input id="heightGround" type="range" value="500" step="10" max="1000" min="100">
+ -->  <script>	
+var canv = document.getElementById("canv");
+var ground = canv.getContext("2d"); 
+/*ground.canvas.height = document.getElementById("widthGround").value;
+ground.canvas.width = document.getElementById("heightGround").value;*/
+document.body.addEventListener('keydown',animate);
+var mc = document.createElement('img');
+mc.src = 'mc.png';
+var blocks = [[0,1,1,1,0,0,0,0,0,0,0,0,0,0,0],
+              [0,0,0,0,0,0,1,1,1,1,1,1,1,1,0],
+			  [1,0,1,0,1,0,1,0,0,0,0,0,0,1,0],
+			  [1,0,1,0,1,0,0,0,1,1,1,1,0,1,0],
+              [0,0,1,0,1,0,1,1,1,0,0,0,0,1,0],
+			  [1,1,1,0,0,0,0,0,1,0,1,1,1,1,0],
+			  [0,0,0,0,1,1,1,0,1,0,0,0,1,1,0],
+			  [0,1,1,1,1,1,1,0,1,1,1,0,1,1,0],
+			  [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
+			  [0,1,1,1,1,1,1,1,1,1,1,1,0,1,1],
+			  [0,1,1,1,1,0,0,0,1,0,0,0,0,1,1],
+			  [0,1,0,0,0,0,1,0,1,0,1,0,0,0,0],
+			  [0,1,0,1,1,1,1,0,1,0,1,0,1,1,1],
+			  [0,0,0,0,0,0,1,0,1,0,1,0,0,0,1],
+			  [0,1,0,1,1,0,1,0,0,0,1,0,1,0,0]];
+var MacLeod  = {}, frame = 0; 
+mc.addEventListener('load',function(){resetProp(); drawGround(); drawMacLeod();});		 
+function drawGround(){
+  var col = blocks.length, row = blocks[0].length;
+  var  blockHeight = canv.height/col;
+  var  blockWidth = canv.width/row;
+  ground.fillStyle ="#0ca04c";
+  ground.fillRect(0,0,canv.width,canv.height);
+  for(var i =0; i<col; i++){
+    for(var j=0; j<row; j++){
+	  if(blocks[i][j]!=0){
+	    ground.fillStyle ="#b54200";
+	    ground.fillRect(j*blockWidth,i*blockHeight,blockWidth,blockHeight);
+	    ground.strokeRect(j*blockWidth,i*blockHeight,blockWidth,blockHeight);
+		ground.fillStyle ="rgb(255, 135, 66)";
+	    ground.fillRect(j*blockWidth+blockWidth/4,i*blockHeight+blockHeight/4,blockWidth/2,blockHeight/2);
+	  }
+	}
+  }
+}
+function resetProp(){
+  MacLeod.x=0;
+  MacLeod.y=0;
+  MacLeod.width=canv.width/blocks[0].length;
+  MacLeod.height=canv.height/blocks.length;
+  
+}
+function animate(){
+  clearMacLeod();
+  setProp();
+  drawMacLeod();
+}
+function setProp(){
+  var collision = getCollision(event.keyCode);
+  if(collision){
+    return;
+  }
+  switch(event.keyCode){
+    case 68: MacLeod.x+=MacLeod.width; break; // d
+    case 65: MacLeod.x-=MacLeod.width; break;//a
+    case 87: MacLeod.y-=MacLeod.height; break;//w
+    case 83: MacLeod.y+=MacLeod.height; break; //s
+  }
+}
+function clearMacLeod(){
+  ground.fillStyle ="#0ca04c";
+  ground.fillRect(MacLeod.x, MacLeod.y,MacLeod.width,MacLeod.height);
+}
+function drawMacLeod(){
+    if (frame > 1){ 
+	  frame = 0; 
+	}
+    ground.drawImage(mc, 0, 100*frame, 100, 100, MacLeod.x, MacLeod.y, MacLeod.width, MacLeod.height);
+    frame++;
+}
+  
+function getCollision(keyCode) {
+  var cx=0, cy=0;
+  var j = Math.abs(Math.round(MacLeod.x/MacLeod.width));
+  var i = Math.abs(Math.round(MacLeod.y/MacLeod.height));
+  switch(keyCode){
+    case 68: j++; break; // d
+    case 65: j--; break;//a
+    case 87: i--; break;//w
+    case 83: i++; break; //s
+  }
+  if (i <0 || j<0 || i > blocks.length-1 || blocks[0].length-1 < j || blocks[i][j] == 1  ){
+    return true;
+  } else if(i == blocks.length-1 && blocks[0].length-1 == j){
+    resetProp(); 
+	return true;
+  } else {
+    return false;
+  }
+}
+  </script>
+ </body>
+</html>

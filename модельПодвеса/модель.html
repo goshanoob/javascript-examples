@@ -1,0 +1,389 @@
+﻿<!DOCTYPE html><html lang="ru"><head>
+<script src="скрипт.js"></script>
+<script src="вычисления.js"></script>
+<link rel="stylesheet" href="стили.css"></link>
+</head> <body> 
+<table><tr><td>
+<div id="модель">
+<X3D version="3.2" height="400px" width="500px"> <Scene> 
+ <Background skyColor="1 1 1"></Background> <Viewpoint position="0 0 3"></Viewpoint>
+ <Transform translation="-0.8, 0.6, 0">
+  <Inline url="тело_0.x3d" название="основание"></Inline>
+  <Transform id="тело_1" translation="0.0, 0.0, 0.0" rotation="0 1 0 0.0">
+   <Inline url="тело_1.x3d" название="плечо" масса="30.0" 
+                            координатыЦМ="0.3, -0.2, 0.0"></Inline>
+   <Transform id="тело_2" translation="0.6, -0.3, 0.0" rotation="0 1 0 0.0">
+    <Inline url="тело_2.x3d" название="основание_2" масса="10.0" 
+	                         координатыЦМ="0.02, -0.25, 0.0"></Inline>
+    <Transform id="тело_3" translation="0.05, -0.26, 0.0" rotation="0 0 1 0.0">
+     <Inline url="тело_3.x3d" название="тяга" масса="20.0" 
+	                          координатыЦМ="0.4, 0.0, 0.0"></Inline> </Transform>
+    <Transform id="тело_4" translation="0.05, -0.4, 0.0" rotation="0 0 1 0.72">
+     <Inline url="тело_4.x3d" название="направляющая" масса="3.0" 
+	                          координатыЦМ="0.05, 0.0, 0.0"></Inline>
+     <Transform id="тело_5" translation="0.32, 0.0, 0.0" rotation="1 0 0 0" p="0">
+      <Inline url="тело_5.x3d" название="шток" масса="3.0" 
+	    координатыЦМ="-0.16, 0.0, 0.0"> </Inline> </Transform> </Transform>
+    <Transform id="тело_6" translation="0.05, -0.17, 0.0" rotation="0 0 1 0.0">
+     <Inline url="тело_6.x3d" название="рычаг" масса="10.0" 
+	                          координатыЦМ="0.4, 0.0, 0.0"></Inline>
+     <Transform id="тело_7" translation="0.8, 0.0, 0.0" rotation="0 0 1 0.0">
+      <Inline url="тело_7.x3d" название="основание_1" масса="10.0" 
+	                           координатыЦМ="0.05, -0.1, 0.0"></Inline>
+      <Transform id="тело_8" translation="0.05, -0.3, 0.0" rotation="0 1 0 0">
+       <Inline url="тело_8.x3d" название="подвод" масса="30.0" 
+	                            координатыЦМ="0.5, -0.4, 0.0"></Inline>
+   </Transform> </Transform> </Transform> </Transform> </Transform>
+</Transform> </Scene> </X3D>
+</br><label>Угол q1</label>
+<input type='range' min='-160' max='160' value='0' id='q1' name="ползунок" step='10'/>
+<output id="текущийУгол1">0</output><label> градусов</label></br>
+<label>Угол q2</label>
+<input type='range' min='-160' max='160' value='0' id='q2' name="ползунок" step='10'/>
+<output id="текущийУгол2">0</output><label> градусов</label></br>
+<label>Вылет штока p</label> <input type='range' min='-0.05' max='0.05' value='0' id='p' name="ползунок" step='0.01'/>
+<output id="текущая_p">0</output><label> м</label></br>
+<label>Угол q8</label>
+<input type='range' min='-160' max='160' value='0' id='q8' name="ползунок" step='10'/>
+<output id="текущийУгол8">0</output><label> градусов</label>
+</div>
+</td>
+<td>
+<label class="заголовок">Входные параметры</label>
+<ul>
+<li>Узел вращения верхний</li>
+<ul>
+<li>Радиальный люфт ШП <input value="12" id="люфт_1"/> мкм</li> 
+<li>Подшипниковая база <input value="160" id="база_1"/> мм </li>
+<li>Шарнирная жёсткость <input value="5.2"/> 10<sup>4</sup> Н/м </li>
+</ul>
+</ul>
+
+<ul>
+<li>Жёсткость плеча</li>
+<ul>
+<li>на изгиб <input value="31" id="жёсткость1"/> 10<sup>4</sup>/Н&#183;м</li> 
+<li>на кручение <input value="16" id="жёсткость2"/> 10<sup>4</sup>/Н&#183;м</li>
+</ul>
+</ul>
+
+
+<ul>
+<li>Узел вращения средний<br/>
+<ul>
+<li>Радиальный люфт ШП <input value="20" id="люфт_2"/> мкм</li>
+<li>Подшипниковая база <input value="50" id="база_2"/> мм</li>
+<li>Шарнирная жёсткость <input value="2.7"/> 10<sup>4</sup> Н/м</li>
+</ul></ul>
+<ul>
+<li>Узел вращения нижний</li>
+<ul>
+<li>Осевой люфт подшипника </br>скольжения <input value="12" id="люфт_3"/> мкм</li>
+<li>Подшипниковая база <input value="50" id="база_3"/> мм</li>
+<li>Шарнирная жёсткость <input value="0.1"/> 10<sup>4</sup> Н/м</li>
+</ul></ul>
+<ul>
+<li>Параметры груза</li>
+<ul>
+<li>Масса <input value="50" id='массаГруза'/> кг</li>
+<li>Плечо силы тяжести <input value="30" id="плечо"/> мм</li>
+</ul></ul>
+<input type="button" value="Вычислить" id='вычислитьПараметры'/><br/>
+</td>
+
+<td >
+<label class="заголовок">Результаты вычислений</label>
+<ul>
+<li>Ошибки от люфтов</li>
+<ul>
+<li>Общая ошибка <output id="общаяОшибкаЛюф">7.879</output> мм</li>
+<li>&#958;<sub>1</sub>=<output id="ошибкаЛюф1">2.451</output> мм;
+ &#958;<sub>2</sub>=<output id="ошибкаЛюф2">4.312</output> мм;<br/>
+ &#958;<sub>3</sub>=<output id="ошибкаЛюф3">1.116</output> мм.
+</li>
+</ul></ul>
+
+<ul>
+<li>Ошибки от податливостей в ШУ</li>
+<ul>
+<li>Общая ошибка <output id="общаяОшибкаПодат">12.524</output> мм</li>
+<li>&#951;<sub>1</sub>=<output id="ошибкаПодат1">5.341</output> мм;
+ &#951;<sub>2</sub>=<output id="ошибкаПодат2">5.362</output> мм;<br/>
+ &#951;<sub>3</sub>=<output id="ошибкаПодат3">1.821</output> мм.
+</li>
+
+</ul></ul>
+
+<ul>
+<li>Ошибки от деформаций плеча</li>
+<ul>
+<li>Общая ошибка <output id="общаяОшибкаДеф">4.584</output> мм</li>
+<li>Ошибка изгиба <output id="ошибкаИзгибаДеф">2.961</output> мм</li>
+<li>Ошибка кручения <output id="ошибкаКрученияДеф">1.623</output> мм</li>
+</ul></ul>
+
+<ul>
+<li>Ошибки от податливостей в стыках</li>
+<ul>
+<li>Стык верхнего ШУ и плеча <output id="ошибкаСтык1">3.312</output> мм</li>
+<li>Стык плеча и среднего ШУ <output id="ошибкаСтык2">1.912</output> мм</li>
+</ul></ul>
+
+<ul>
+<li>Нагрузки на подшипники</li>
+<ul>
+<li>Узел вращения верхний</li>
+<ul>
+<li>Осевая сила <output id="осевСила1"></output> Н</li>
+<li>Изгибающий момент<br/> силы <output id='изгибМомент1'></output> Н&#183;м</li>
+<li>Крутящий момент<br/> силы <output id='крутящийМомент1'></output> Н&#183;м</li>
+</ul>
+<li>Узел вращения средний</li>
+<ul>
+<li>Осевая сила <output id="осевСила2"></output> Н</li>
+<li>Изгибающий момент<br/> силы <output id='изгибМомент2'></output> Н&#183;м</li>
+<li>Крутящий момент<br/> силы <output id='крутящийМомент2'></output> Н&#183;м</li>
+</ul>
+<li>Узел вращения нижний</li>
+<ul>
+<li>Осевая сила <output id="осевСила3"></output> Н</li>
+<li>Изгибающий момент<br/> силы <output id='изгибМомент3'></output> Н&#183;м</li>
+<li>Крутящий момент<br/> силы <output id='крутящийМомент3'></output> Н&#183;м</li>
+</ul>
+</ul></ul>
+</td></tr>
+</table>
+<div id="svg">
+<svg version="1.1" width="400" height="400" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+ <g id="подвес1" transform="translate(130,140)" >
+  
+  <g transform="rotate(0)" id="поворот11">
+  <rect width="40" height="10" fill="red" x="5" y="-5" id="вектор11" class="вектор"/>
+  <g transform="translate(45,0)" id="вектор12">
+   <path d="M0,-5 l0,-10 20,15 -20,15 0,-10"  class="вектор"/>
+   <text x="35" y="10" id="длина11">20</text>
+  </g>
+  </g>
+  
+  <g transform="rotate(0)" id="поворот13">
+  <rect width="10" height="40" fill="red" x="-5" y="20" id="вектор13" class="вектор"/>
+  <g transform="translate(0,40)" id="вектор14">
+   <path d="M5,20 l10,0 -15,20 -15,-20 10,0"  class="вектор"/>
+   <text x="10" y="-42" id="длина13">80</text>
+  </g>
+  </g>
+  
+  
+   <g transform="skewY(-45) rotate(0)" id="skewY15">
+    <rect width="40" height="10" fill="red" x="5" y="-5" id="вектор15" transform="rotate(180)" class="вектор"/>
+    <g transform="translate(-40,0)" id="вектор16">
+     <path d="M-5,-5 l0,-10 -20,15 20,15 0,-10" class="вектор"/>
+     <text x="-15" y="45" transform="skewY(45)" id="длина15">800</text>
+    </g>
+   </g>
+ 
+  
+  <use xlink:href="коллекция.svg#шарнир" />
+  
+  <path d="m0,20 l0,25 90,0 0,10 m0,40 l0,20" />
+  <g transform="translate(90,75)">
+  
+    <g transform="rotate(0)" id="поворот17">
+   <rect width="40" height="10" fill="red" x="5" y="-5" id="вектор17" class="вектор"/>
+   <g transform="translate(45,0)" id="вектор18">
+    <path d="M0,-5 l0,-10 20,15 -20,15 0,-10"  class="вектор" />
+	<text x="35" y="0" id="длина17">10</text>
+   </g>
+   </g>
+   
+     <g transform="rotate(0)" id="поворот19">
+   <rect width="10" height="40" fill="red" x="-5" y="20" id="вектор19" class="вектор"/>
+   <g transform="translate(0,40)" id="вектор110">
+    <path d="M5,20 l10,0 -15,20 -15,-20 10,0"  class="вектор" />
+    <text x="10" y="-42" id="длина19">10</text>
+   </g>
+   </g>
+
+  <g transform="skewY(-45) rotate(0)" id="skewY111">
+   <rect width="20" height="10" fill="red" x="5" y="-5" id="вектор111" transform="rotate(180)" class="вектор"/>
+   <g  transform="translate(-20,0)" id="вектор112">
+    <path d="M-5,-5 l0,-10 -20,15 20,15 0,-10" class="вектор"/>
+    <text x="-15" y="45" transform="skewY(45)" id="длина111">10</text>
+   </g>
+  </g>
+	
+    <use xlink:href="коллекция.svg#шарнир" />
+    <use xlink:href="коллекция.svg#разрыв" transform="translate(0,40)"/>
+	<path d="m0,20 l0,20" />
+   </g>
+  </g>
+</svg>
+
+<svg version="1.1" width="400" height="400" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+ <g id="подвес2" transform="translate(50,150)" >
+  <path d="m-20,-20 l0,20 15,0 m-15,0 l0,60 15,0 m-15,0 l0,60 15,0" />
+  <use xlink:href="коллекция.svg#разрыв" transform="translate(-20,-20)"/>
+  
+  <g transform="rotate(30)">
+  <g id="узел6" transform="rotate(0)">
+  
+
+   
+   <g transform="translate(43,-25)">
+    <g id="поворот25" transform="rotate(60)">
+     <g id='перенос25' transform="translate(-3,-40)">
+      <rect height="40" width="6" class="вектор" id="вектор25"/>
+      <path d="m0,0 l-6,0 9,-12 9,12 -6,0" fill="red" transform="translate(0,0)" class="вектор"/>
+     </g>
+    </g> 
+   </g> 
+   <text transform="translate(43,-40) rotate(-30)" id="длина25">0</text>   
+   
+   <g transform="translate(140,-80)">
+    <g id="поворот27" transform="rotate(60)">
+     <g id='перенос27' transform="translate(-3,-40)">
+      <rect height="40" width="6" class="вектор" id="вектор27"/>
+      <path d="m0,0 l-6,0 9,-12 9,12 -6,0" fill="red" transform="translate(0,0)" class="вектор"/>
+     </g>
+    </g> 
+   </g> 
+   <text transform="translate(140,-88) rotate(-30)" id="длина27">0</text>  
+   
+
+
+
+
+   
+   <use xlink:href="коллекция.svg#звено" transform="rotate(-30)"/>
+   <use xlink:href="коллекция.svg#шип" transform="translate(43,-25) rotate(-30)"/>
+   <path d="m67,-39 l68,-41" />
+
+   <g transform="translate(43,-25)">
+    <g id="узел5" transform="rotate(-23.58)">
+     <use xlink:href="коллекция.svg#звено" transform="rotate(106)"/>
+     <path d="m-11,38 l-18,62" /> 
+    </g>
+   </g>
+   
+   
+   <g transform="translate(140,-80) ">
+   <g transform="rotate(-30)">
+    <g id="узел7" transform="rotate(0)">
+     <use xlink:href="коллекция.svg#звено" transform="rotate(90)"/>
+     <use xlink:href="коллекция.svg#шип" transform="translate(0,60) rotate(90)"/>
+     <use xlink:href="коллекция.svg#разрыв" transform="translate(0,90)"/>
+    </g>
+   </g>
+   </g>
+   
+  </g>
+  </g>
+  
+  <g  transform="translate(0,60)">
+  
+  <g transform="rotate(30)">
+  
+   <g id="узел3" transform="rotate(0)">
+    <use xlink:href="коллекция.svg#звено" transform="rotate(-30) "/>
+    <path d="m34,-20 l72,-40" />
+    <use xlink:href="коллекция.svg#звено" transform="translate(140,-80) rotate(150)"/>
+
+       <g transform="translate(140,-80)">
+    <g id="поворот29" transform="rotate(60)">
+     <g id='перенос29' transform="translate(-3,-40)">
+      <rect height="40" width="6" class="вектор" id="вектор29"/>
+      <path d="m0,0 l-6,0 9,-12 9,12 -6,0" fill="red" transform="translate(0,0)" class="вектор"/>
+     </g>
+    </g> 
+   </g> 
+   <text transform="translate(165,-70) rotate(-30)" id="длина29">0</text>
+    
+    
+    
+   </g>
+  </g>
+  </g>
+  
+  <g  transform="translate(0,120) rotate(20.4387796)">
+   <g id="узел4" transform="rotate(-15.93)">
+    <circle r="5" />
+    <path d="m-4,-3 l11,-36"/> <path d="m4,4 l13,-40" />
+   </g>
+  </g>
+  
+   <g id="поворот26" transform="rotate(90)">
+    <g id='перенос26' transform="translate(-3,-40)">
+     <rect height="40" width="6" class="вектор" id="вектор26"/>
+      <path d="m0,0 l-6,0 9,-12 9,12 -6,0" fill="red" transform="translate(0,0)" class="вектор"/>
+    </g>
+   </g> 
+   <text transform="translate(0,20)" id="длина26">0</text>
+   
+   
+  
+   
+   
+   <g transform="translate(0,60)">
+    <g id="поворот23" transform="rotate(90)">
+     <g id='перенос23' transform="translate(-3,-40)">
+      <rect height="40" width="6" class="вектор" id="вектор23"/>
+      <path d="m0,0 l-6,0 9,-12 9,12 -6,0" fill="red" transform="translate(0,0)" class="вектор"/>
+     </g>
+    </g> 
+   </g> 
+   <text transform="translate(0,50)" id="длина23">5</text>
+   
+   <g transform="translate(0,120)">
+    <g id="поворот24" transform="rotate(90)">
+     <g id='перенос24' transform="translate(-3,-40)">
+      <rect height="40" width="6" class="вектор" id="вектор24"/>
+      <path d="m0,0 l-6,0 9,-12 9,12 -6,0" fill="red" transform="translate(0,0)" class="вектор"/>
+     </g>
+    </g> 
+   </g> 
+   <text transform="translate(-18,140)" id="длина24">5</text>   
+   
+
+   
+
+  </g>
+</svg>
+
+<svg version="1.1" width="400" height="400" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+ <g id="подвес3" transform="translate(80,100)" >
+ 
+  <g transform="rotate(0)" id="поворот31">
+   <rect width="30" height="10" fill="red" x="5" y="-5" id="вектор31" class="вектор"/>
+   <g transform="translate(35,0)" id="вектор32">
+    <path d="M0,-5 l0,-10 20,15 -20,15 0,-10"  class="вектор" />
+	<text x="35" y="0" id="длина31">600</text>
+   </g>  
+   </g>  
+  
+  <g transform="rotate(0)" id="поворот33">
+  <rect width="10" height="40" fill="red" x="-5" y="20" id="вектор33" class="вектор"/>
+  <g transform="translate(0,40)" id="вектор34" >
+   <path d="M5,20 l10,0 -15,20 -15,-20 10,0"  class="вектор"/>
+   <text x="10" y="-40" id="длина33">800</text>
+  </g>  
+  </g>  
+  
+   
+  <g transform="skewY(-45) rotate(0)" id="skew35">
+   <rect width="40" height="10" fill="red" x="5" y="-5" id="вектор35" transform="rotate(180)" class="вектор"/>
+   <g  transform="translate(-40,0)" id="вектор36">
+    <path d="M-5,-5 l0,-10 -20,15 20,15 0,-10" class="вектор"/>
+    <text x="-15" y="45" transform="skewY(45)" id="длина35">800</text>
+   </g>
+  </g>  
+
+  
+  <path d="m-20,-60 l0,20 20,0 0,20" />
+   <use xlink:href="коллекция.svg#шарнир"/>
+   <path d="m5,0 l10,0 0,80 m-40,0 l80,0 m-2,-3 l0,-20 -20,0 0,20 z" />
+   <use xlink:href="коллекция.svg#разрыв" transform="translate(-20,-60)"/>
+ </g>
+</svg>
+</div>
+<script src="x3dom.js"></script>
+</body> </html>

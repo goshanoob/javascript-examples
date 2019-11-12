@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<X3D version="3.2"> <Scene> <Background skyColor="1 1 1"></Background>
+<Transform translation="0, 0.3, 0">
+<Inline url="XYZ.x3d" название="потолок"></Inline>
+<Transform название="часть потолка"> 
+ <Shape> <Box size="1.0, 0.01 1.0"></Box> 
+  <Appearance> <Material diffuseColor="1 0.5 1"></Material> </Appearance> 
+ </Shape> 
+</Transform>
+<Transform translation="0.06, -0.19, 0" название="правое сечение верхней опоры"> 
+ <Shape> <Box size="0.015, 0.4 0.015"></Box> 
+  <Appearance> <Material diffuseColor="1 0.5 1"></Material> </Appearance> 
+ </Shape> 
+</Transform>
+<Transform translation="-0.06, -0.19, 0" название="левое сечение верхней опоры"> 
+ <Shape> <Box size="0.015, 0.4 0.015"></Box> 
+  <Appearance> <Material diffuseColor="1 0.5 1"></Material> </Appearance> 
+ </Shape> 
+</Transform>
+</Transform>
+</Scene> </X3D>

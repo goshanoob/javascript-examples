@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<X3D version="3.2"> <Scene> <Background skyColor="1 1 1"></Background>
+<Inline url="XYZ.x3d" название="плечо" масса="0" координатыЦМ="0"></Inline>
+<Transform rotation="1 0 0 1.57" название="ось" масса="0.74"> 
+ <Shape> <Cylinder radius="0.01" height="0.18"></Cylinder>
+  <Appearance> <Material diffuseColor="1 0 0"></Material> </Appearance> 
+ </Shape>
+</Transform>
+<Transform translation="0.1, 0, 0" 
+           название="короб плеча" масса="0"> 
+ <Shape плотность="1.24"> <Box size="0.2, 0.04 0.04"></Box> 
+  <Appearance> <Material diffuseColor="0 0 1"></Material> </Appearance> 
+ </Shape> 
+</Transform>
+</Scene> </X3D>

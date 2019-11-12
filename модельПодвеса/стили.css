@@ -1,0 +1,14 @@
+td{vertical-align: top; margin: -20px;}
+li > input{width: 40px; text-align: center;}
+.заголовок{font-size: 130%}
+
+path, circle{fill:none; stroke-width:1; stroke:rgb(0,0,0);}
+.вектор{fill:red; stroke-width:1; stroke:red; opacity: 0.5}
+
+
+line {stroke-width:1; stroke:rgb(0,0,0)}
+
+text{font-size:15px; fill:black; stroke:none; text-anchor:middle;}
+
+#svg{margin-top:-150px;}
+table{width:100%}
