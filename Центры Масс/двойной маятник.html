@@ -1,0 +1,45 @@
+<html>
+<head><script src ="функцииSVGобозначений.js"></script>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xlink="http://www.w3.org/1999/xlink" width="340" height="360">
+	<g id="тело_0" transform="translate(100,250)">
+		<path d="m0,10 l 0,20 m-25,0 l 50,0" stroke="black"/>
+		<path d="m-25,30 l -8,8 m24,-8 l -8,8 m24,-8 l -8,8 m24,-8 l -8,8 " stroke="black"/>
+		<g id="тело_1" transform="translate(0,0) rotate(-45)" видКП = "ВКП" осьКП="Z">
+			<path d="m0,0 L 100,0" stroke="black"/>
+			<circle r="10" cx="0" cy="0" stroke="black" fill="white"/>
+			<g id="тело_2" transform="translate(100,0) rotate(60)" видКП = "ВКП" осьКП="Z">
+				<path d="m0,0 l 100,0" stroke="black"/>
+				<circle r="10" cx="0" cy="0" stroke="black" fill="white"/>
+			</g>
+		</g>
+	</g>
+</svg>
+</body>
+<span ></span>
+<script>
+	var N = document.getElementsByTagName("g").length-1, CM = [,[0,0],[0,0]], pol = [,[0,0],[0,0]];
+	makePolz();
+	setMassCenter();
+	calculCoord();
+	function calculCoord(){
+		var l = 100, r = 50;
+		var trans1 = document.getElementById("тело_1").getAttribute("transform"),
+		trans2 = document.getElementById("тело_2").getAttribute("transform");
+		var a = 0.0175*trans1.match(/rotate\((-?\d+)\)/)[1], // угол в радианах
+		b = 0.0175*trans2.match(/rotate\((-?\d+)\)/)[1];
+		var ca = Math.cos(a);
+		var sa = Math.sin(a);
+		CM[1][0] = r * ca; // координата x ЦМ тела 1
+		CM[1][1] = r * sa; // координата y
+		pol[2][0] = l * ca; // координата x полюса тела 2
+		pol[2][1] = l * sa; // координата y
+		CM[2][0] = r * Math.cos(b+a) + pol[2][0]; // координата x ЦМ тела 2
+		CM[2][1] = r * Math.sin(b+a) + pol[2][1]; // координата y
+		
+		drawLine(CM[1], CM[2]);
+	}
+</script>
+</html>
+

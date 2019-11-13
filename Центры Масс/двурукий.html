@@ -1,0 +1,105 @@
+<html>
+<head><script src ="функцииSVGобозначений.js"></script>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="500">
+<g id="тело_0" transform="translate(150,250)">
+	<path d="m0,0 L -30,0 M-30,-20 L-30,20" stroke="black"/>
+	<path d="m-30,-20 l-8,8 m8,5 l-8,8 m8,5 l-8,8 m8,5 l-8,8" stroke="black"/>
+	<g id="тело_1" transform="translate(0,0) rotate(0)" видКП = "ВКП" осьКП="Z"  ЦМ="50,0">
+		<path d="m0,0 L 100,0" stroke="black"/>
+		<circle r="10" cx="0" cy="0" stroke="black" fill="white"/>
+		<g id="тело_2" transform="translate(100,0) rotate(0)" видКП = "ВКП" осьКП="Z">
+			<path d="m0,0 L 100,0" stroke="black"/>
+			<path d="m80,-60 l 40,0 0,20 -40,0 0,-20 40,20 m0,-20 l -40,20" stroke="black" fill="white"/>
+			<path d="m80,60 l 40,0 0,-20 -40,0 0,20 40,-20 m0,20 l -40,-20" stroke="black" fill="white"/>
+			<path d="m100,-40 l 0,80" stroke="black" />
+			<circle r="10" cx="0" cy="0" stroke="black" fill="white"/>
+			<g id="тело_3" transform="translate(200,-50) rotate(0)" видКП = "ПКП" осьКП="X">
+				<path d="m-200,0 L 0,0" stroke="black"/>
+				<g id="тело_4" transform="translate(0,0) rotate(0)" видКП = "ВКП" осьКП="Z">
+					<path d="m0,0 L 100,0" stroke="black"/>
+					<path d="m100,-10 l 0,20 10,0 m0,-20 l-10,0" stroke="black" fill="none"/>
+					<circle r="10" cx="0" cy="0" stroke="black" fill="white"/>
+				</g>
+			</g>
+			<g id="тело_5" transform="translate(200,50) rotate(0)" видКП = "ПКП" осьКП="X">
+				<path d="m-200,0 L 0,0" stroke="black"/>
+				<g id="тело_6" transform="translate(0,0) rotate(0)" видКП = "ВКП" осьКП="Z">
+					<path d="m0,0 L 100,0" stroke="black"/>
+					<path d="m100,-10 l 0,20 10,0 m0,-20 l-10,0" stroke="black" fill="none"/>
+					<circle r="10" cx="0" cy="0" stroke="black" fill="white"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>
+<br/>
+<span ></span>
+</body>
+<script>
+	var N = document.getElementsByTagName("g").length-1, CM = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]], pol = [,[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]], CMp=[,[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]];
+	makePolz(); // добавляет ползунки перемещения тел
+	setMassCenter(); // отмещает ЦМ тел
+	calculCoord(); // вычисляет координаты ЦМ в одной СК
+	function calculCoord(){
+		var l = 100, r = 50;
+		var trans1 = document.getElementById("тело_1").getAttribute("transform"),
+		trans2 = document.getElementById("тело_2").getAttribute("transform"),
+		trans3 = document.getElementById("тело_3").getAttribute("transform"),
+		trans4 = document.getElementById("тело_4").getAttribute("transform"),
+		trans5 = document.getElementById("тело_5").getAttribute("transform"),
+		trans6 = document.getElementById("тело_6").getAttribute("transform"); // относительные координаты полюсов
+		var t3 = trans3.match(/translate\((.*?)\)/)[1].split(","); 
+		t3[0] = parseFloat(t3[0]);
+		t3[1] = parseFloat(t3[1]);
+		var t5 = trans5.match(/translate\((.*?)\)/)[1].split(","); 
+		t5[0] = parseFloat(t5[0]);
+		t5[1] = parseFloat(t5[1]);
+		var a1 = 0.0175*trans1.match(/rotate\((-?\d+)\)/)[1],
+		a2 = 0.0175*trans2.match(/rotate\((-?\d+)\)/)[1], 
+		a4 = 0.0175*trans4.match(/rotate\((-?\d+)\)/)[1], 
+		a6 = 0.0175*trans6.match(/rotate\((-?\d+)\)/)[1]; // углы поворота тел в радианах
+		var c1 = Math.cos(a1).makeRound();
+		var s1 = Math.sin(a1).makeRound();
+		CM[1][0] = r * c1; // координата x ЦМ тела 1
+		CM[1][1] = r * s1; // координата y
+		pol[2][0] = l * c1; // координата x полюса тела 2
+		pol[2][1] = l * s1; // координата y
+		CM[2][0] = r * Math.cos(a1+a2).makeRound() + pol[2][0]; // координата x ЦМ тела 2
+		CM[2][1] = r * Math.sin(a1+a2).makeRound() + pol[2][1]; // координата y
+		var r3 = Math.sqrt(r*r + (l+t3[0]-200)*(l+t3[0]-200)); // расстояние от полюса тела 2 до ЦМ тела 3
+		var a3 = Math.asin(r/r3); // угол между прямой от полюса тела 2 до ЦМ3 и горизонталью
+		CM[3][0] = r3 * Math.cos(a1+a2-a3).makeRound() + pol[2][0];
+		CM[3][1] =r3 * Math.sin(a1+a2-a3).makeRound() + pol[2][1];
+		var l3 = Math.sqrt(r*r + (l+t3[0]-100)*(l+t3[0]-100)); // расстояние от полюса тела 2 до полюса тела 3
+		var a3_2 = Math.asin(r/l3); // угол между прямой от полюса тела 2 до полюса тела 3 и горизонталью
+		pol[3][0] = l3 *  Math.cos(a1+a2-a3_2).makeRound() + pol[2][0];
+		pol[3][1] = l3 * Math.sin(a1+a2-a3_2).makeRound() + pol[2][1];
+		CM[4][0] = r * Math.cos(a1+a2+a4).makeRound() + pol[3][0];
+		CM[4][1] = r * Math.sin(a1+a2+a4).makeRound() + pol[3][1];
+		
+		var r5 = Math.sqrt(r*r + (l+t5[0]-200)*(l+t5[0]-200));
+		var a5 = Math.asin(r/r5);
+		CM[5][0] = r5 * Math.cos(a1+a2+a5).makeRound() + pol[2][0];
+		CM[5][1] = r5 * Math.sin(a1+a2+a5).makeRound() + pol[2][1];
+		var l5 = Math.sqrt(r*r + (l+t5[0]-100)*(l+t5[0]-100));
+		var a5_2 = Math.asin(r/l5);
+		pol[5][0] = l5 *  Math.cos(a1+a2+a5_2).makeRound() + pol[2][0];
+		pol[5][1] = l5 * Math.sin(a1+a2+a5_2).makeRound() + pol[2][1];
+		CM[6][0] = r * Math.cos(a1+a2+a6).makeRound() + pol[5][0];
+		CM[6][1] = r * Math.sin(a1+a2+a6).makeRound() + pol[5][1];
+
+		CMp[3] =[ (CM[3][0]+ CM[4][0]) / 2, (CM[3][1]+ CM[4][1]) / 2]; // ЦМ подсистемы 3
+		CMp[5] =[ (CM[5][0]+ CM[6][0]) / 2, (CM[5][1]+ CM[6][1]) / 2];
+		CMp[7] =[ (CMp[3][0]+ CMp[5][0]) / 2, (CMp[3][1]+ CMp[5][1]) / 2]; // ЦМ подсистем 3 и 5
+		CMp[2] =[ (CMp[7][0]+ CM[2][0]) / 2, (CMp[7][1]+ CM[2][1]) / 2];
+		
+		drawLine(CM[3],CM[4], CM[5],CM[6], CMp[3],CMp[5], CMp[7],CM[2], CMp[2],CM[1]); // рисует отрезки и точки
+	}
+	
+	
+</script>
+</html>
+

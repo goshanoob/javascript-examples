@@ -1,0 +1,201 @@
+<html>
+<head>
+ <script src="http://www.x3dom.org/release/x3dom.js"></script>
+ <style >
+ section {
+    float: left;
+}
+ </style >
+</head>
+
+<body>
+
+<section>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xlink="http://www.w3.org/1999/xlink" width="340" height="400">
+	
+	<g id="тело_0" transform="translate(100,150)">
+		<path d="m0,10 l 0,20 m-25,0 l 50,0" stroke="black"/>
+		<g id="тело_1" transform="translate(0,0) rotate(0)">
+			<path d="m0,0 l 100,0" stroke="black"/>
+			<circle r="10" cx="0" cy="0" stroke="black" fill="white"/>
+			<g id="тело_2" transform="translate(100,0) rotate(0)">
+				<path d="m0,0 l 100,0" stroke="black"/>
+				<path id="центрМасс_2" d="" stroke="red"/>
+				<circle r="10" cx="0" cy="0" stroke="black" fill="white"/>
+			</g>
+		</g>
+	</g>
+</svg>
+</section>
+<section>
+<X3D width="300" height="300">
+  <Scene>
+      <Viewpoint position="0 0 2"></Viewpoint>
+      <Background skyColor="1 1 1"></Background>
+      <Transform id='тело0' > 
+	  <Transform translation="0 -0.3 0">
+        <Shape>
+          <Box size="1 0.01 1"></Box>
+          <Appearance>
+            <Material diffuseColor='1 1 0'></Material>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation="0 -0.15 0">
+        <Shape>
+          <Box size="0.1 0.3 0.1"></Box>
+          <Appearance>
+            <Material diffuseColor='1 1 0'></Material>
+          </Appearance>
+        </Shape>
+      </Transform>
+	  
+		<Transform id = "центрМасс" showProxyGeometry="true">
+			<Transform>
+			<Shape>
+			<Sphere radius = "0.02"></Sphere>
+			<Appearance>
+            <Material diffuseColor='1 0 0'></Material>
+			</Appearance>
+			</Shape>
+			</Transform>
+
+		</Transform>
+		<Transform id='тело1' > 
+		<Transform  rotation="1 0 0 1.57">
+        <Shape>
+          <Cylinder radius = "0.05" height="0.2"></Cylinder>
+          <Appearance>
+            <Material diffuseColor='1 0 1'></Material>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation="0.25 0 0">
+        <Shape>
+          <Box size="0.5 0.1 0.1"></Box>
+          <Appearance>
+            <Material diffuseColor='1 0 1'></Material>
+          </Appearance>
+        </Shape>
+      </Transform>
+	  
+			<Transform id='тело2' translation="0.5 0 0"> 
+			<Transform  rotation="1 0 0 1.57">
+        <Shape>
+          <Cylinder radius = "0.05" height="0.2"></Cylinder>
+          <Appearance>
+            <Material diffuseColor='1 0 1'></Material>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation="0.25 0 0">
+        <Shape>
+          <Box size="0.5 0.1 0.1"></Box>
+          <Appearance>
+            <Material diffuseColor='1 0 1'></Material>
+          </Appearance>
+        </Shape>
+      </Transform>
+			
+			</Transform>
+		</Transform>
+      </Transform>
+  </Scene>
+</X3D>
+
+</section>
+<span>
+</span>
+</body>
+
+<script>
+	var N = document.getElementsByTagName("g").length-1, CM = [,[0,0],[0,0]], pol = [,[0,0],[0,0]];
+	makePolz();
+	setMassCenter();
+	calculCoord();
+	function calculCoord(){
+		var l = 100, r = 50;
+		var trans1 = document.getElementById("тело_1").getAttribute("transform");
+		var trans2 = document.getElementById("тело_2").getAttribute("transform");
+		var a = 0.0175*trans1.match(/rotate\((-?\d+)\)/)[1]; // угол в радианах
+		var b = 0.0175*trans2.match(/rotate\((-?\d+)\)/)[1];
+		var t = trans1.match(/translate\((.*?)\)/)[1].split(",");
+		pol[1][0] = t[0]; // координата x полюса тела 1
+		pol[1][1] = t[1]; // координата y
+		CM[1][0] = r * parseFloat(Math.cos(a).toFixed(2)); // координата x ЦМ тела 1
+		CM[1][1] = r * parseFloat(Math.sin(a).toFixed(2)); // координата y
+		pol[2][0] = l * parseFloat(Math.cos(a).toFixed(2)); // координата x полюса тела 2
+		pol[2][1] = l * parseFloat(Math.sin(a).toFixed(2)); // координата y
+		CM[2][0] = r * Math.cos(b+a).toFixed(2) + pol[2][0]; // координата x ЦМ тела 2
+		CM[2][1] = r * Math.sin(b+a).toFixed(2) + pol[2][1]; // координата y
+		
+		drawLine(CM[1], CM[2]);
+		
+	}
+	
+	function drawLine(A,B){
+		if(document.getElementById("line")){
+			document.getElementById("line").remove();
+			document.getElementById("cm").remove();
+		}
+		var telo0 = document.getElementById('тело_0');
+		var path = document.createElementNS("http://www.w3.org/2000/svg", 'path'); 
+		var circle = document.createElementNS("http://www.w3.org/2000/svg", 'circle'); 
+		var x = (A[0]+B[0])/2, y = (A[1]+B[1])/2; // координаты середины отреза
+		path.setAttribute("d","M "+A[0]+" "+A[1]+" L "+B[0]+" "+B[1]);
+		path.setAttribute("stroke","red");
+		path.setAttribute("id","line");
+		telo0.appendChild(path);
+		// точка в середине отрезка
+		circle.setAttribute("id","cm");
+		circle.setAttribute("r","5");
+		circle.setAttribute("cx",x);
+		circle.setAttribute("cy",y);
+		telo0.appendChild(circle);
+		
+		// цм в x3dom
+		document.getElementById("центрМасс").setAttribute("translation", x/200+" "+y/200+" 0");
+		
+	}
+	
+	function setMassCenter(){
+		for(var i=1; i<=N; i++){
+			var telo = document.getElementById("тело_"+i);
+			var points = telo.getElementsByTagName("path")[0].getAttribute("d").match(/\d+/g);
+			var massCenter = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+			var x = (points[0]+points[2])/2, y = (points[1]+points[3])/2;
+			//CM[i] = [x+CM[i-1][0],y+CM[i-1][1]];
+			massCenter.setAttribute("d","m"+(x-5)+","+(y-5)+" l 10,10 m0,-10 l-10,10");
+			massCenter.setAttribute("stroke","red");
+			telo.appendChild(massCenter);
+		}
+	}
+	
+	function rotate(){
+		var n = this.id.replace(/\D/g,"");
+		var angle = this.value;
+		var telo = document.getElementById("тело_"+n);
+		var trans = telo.getAttribute("transform");
+		telo.setAttribute("transform", trans.replace(/rotate\(-?\d+\)/,"rotate("+angle+")"));
+		document.getElementsByTagName("span")[0].innerHTML = angle;
+		// вращение в x3dom
+		var teloX3D = document.getElementById("тело"+n);
+		teloX3D.setAttribute("rotation", "0 0 1 "+(0.0175*angle));
+		
+		calculCoord();
+	}
+	
+	function makePolz(){
+		for(var i=0; i< N; i++){
+			var inp = document.createElement("input");
+			inp.id="polz_"+(i+1);
+			inp.type = "range";
+			inp.step="10";
+			inp.min="-180"; inp.max="180";
+			document.body.appendChild(inp);
+			inp.addEventListener("input", rotate);
+		}
+	}
+</script>
+</html>
+

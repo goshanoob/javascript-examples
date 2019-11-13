@@ -1,0 +1,4 @@
+path {stroke: black}
+circle {stroke: black; fill: white}
+circle[id^=cm]{fill: black}
+path[id^=line]{stroke: red}
