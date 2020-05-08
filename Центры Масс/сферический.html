@@ -3,6 +3,17 @@
 <link href="стили.css" rel="stylesheet"></link>
 </head>
 <body>
+<div>
+	<p>
+		<span><a href="двойной маятник.html">Двойной маятник | </a></span>
+		<span><a href="двойной маятник svg+x3d.html">Двойной маятник 3D | </a></span>
+		<span><a href="сферический.html">Манипулятор со сферической системой координат | </a></span>
+		<span><a href=".html">Шагающий аппарат в плоскости | </a></span>
+	</p>
+</div>
+<div>
+	<span>Абсолютные координаты центров масс: </span><span id="showCM"></span>
+</div>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="360">
 	<g id="тело_0" transform="translate(150,150)">
 		<path d="m-10,164 l-8,8 m8,4 l-8,8 m8,4 l-8,8 m28,-32 l8,8 m-8,4 l8,8 m-8,4 l8,8" stroke="black"/>
@@ -22,7 +33,7 @@
 	</g>
 </svg>
 </body>
-<span ></span>
+<span id="coord"></span>
 <script>
 	var N = document.getElementsByTagName("g").length-1, CM = [,[0,0],[0,0],[0,0]], pol = [,[0,0],[0,0],[0,0]], CMp=[,[0,0],[0,0],[0,0]];
 	makePolz();

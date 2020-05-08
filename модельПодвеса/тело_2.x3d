@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?> 
 <X3D version="3.2"> <Scene> <Background skyColor="1 1 1"></Background>
-<Inline url="XYZ.x3d" название="основание 2"></Inline>
 <Transform translation="0 0 0" название="прокладка" масса="0.74"> 
  <Shape> <Cylinder radius="0.0625" height="0.018"></Cylinder>
   <Appearance> <Material diffuseColor="1 0 0"></Material> </Appearance> 

@@ -9,6 +9,14 @@
 </head>
 
 <body>
+<div>
+	<p>
+		<span><a href="двойной маятник.html">Двойной маятник | </a></span>
+		<span><a href="двойной маятник svg+x3d.html">Двойной маятник 3D | </a></span>
+		<span><a href="сферический.html">Манипулятор со сферической системой координат | </a></span>
+		<span><a href=".html">Шагающий аппарат в плоскости | </a></span>
+	</p>
+</div>
 
 <section>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xlink="http://www.w3.org/1999/xlink" width="340" height="400">
@@ -104,7 +112,7 @@
 </X3D>
 
 </section>
-<span>
+<span id="coord">
 </span>
 </body>
 
@@ -177,7 +185,7 @@
 		var telo = document.getElementById("тело_"+n);
 		var trans = telo.getAttribute("transform");
 		telo.setAttribute("transform", trans.replace(/rotate\(-?\d+\)/,"rotate("+angle+")"));
-		document.getElementsByTagName("span")[0].innerHTML = angle;
+		document.getElementById("coord").innerHTML = angle;
 		// вращение в x3dom
 		var teloX3D = document.getElementById("тело"+n);
 		teloX3D.setAttribute("rotation", "0 0 1 "+(0.0175*angle));

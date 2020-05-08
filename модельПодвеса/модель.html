@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html><html lang="ru"><head>
 <script src="скрипт.js"></script>
 <script src="вычисления.js"></script>
-<link rel="stylesheet" href="стили.css"></link>
+<link rel="stylesheet" href="стиль.css"></link>
 </head> <body> 
 <table><tr><td>
 <div id="модель">
@@ -183,7 +183,7 @@
    </g>
  
   
-  <use xlink:href="коллекция.svg#шарнир" />
+  <path id="шарнир" d="m10,20 l 0,-20 m-10,0 l 20,0 m-10,20 l 0,20 m-10,0 l 20,0 m-5,-5 l0,-30 m-10,0 l 0,30" transform="translate(-10,-20)"/>
   
   <path d="m0,20 l0,25 90,0 0,10 m0,40 l0,20" />
   <g transform="translate(90,75)">
@@ -212,18 +212,26 @@
    </g>
   </g>
 	
-    <use xlink:href="коллекция.svg#шарнир" />
-    <use xlink:href="коллекция.svg#разрыв" transform="translate(0,40)"/>
+    <use xlink:href="#шарнир" />
+
+	<path d="m0,0 c0,-7 20,-7 20,0 0,7 20,7 20,0" transform="translate(-20,40)"/>
+
+	
 	<path d="m0,20 l0,20" />
    </g>
   </g>
 </svg>
 
 <svg version="1.1" width="400" height="400" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  
+  
+
+
+
  <g id="подвес2" transform="translate(50,150)" >
   <path d="m-20,-20 l0,20 15,0 m-15,0 l0,60 15,0 m-15,0 l0,60 15,0" />
-  <use xlink:href="коллекция.svg#разрыв" transform="translate(-20,-20)"/>
   
+  <path d="m0,0 c0,-7 20,-7 20,0 0,7 20,7 20,0" transform="translate(-40,-20)"/>
   <g transform="rotate(30)">
   <g id="узел6" transform="rotate(0)">
   
@@ -249,18 +257,21 @@
    </g> 
    <text transform="translate(140,-88) rotate(-30)" id="длина27">0</text>  
    
-
-
-
-
+   <g transform="rotate(-30)">
+	   <g id="звено">
+		<circle r="5" stroke="none"/>
+		<line x1="5" x2="40" stroke="none"/>
+	   </g>
+   </g>
    
-   <use xlink:href="коллекция.svg#звено" transform="rotate(-30)"/>
-   <use xlink:href="коллекция.svg#шип" transform="translate(43,-25) rotate(-30)"/>
+   <g transform="translate(43,-25) rotate(-30)">
+     <path id="шип" d="m0,0 l 20,0 a 10,10 0 0,1 20,0 l 20,0" transform="translate(-30,0)" stroke="none"/>
+   </g>
    <path d="m67,-39 l68,-41" />
 
    <g transform="translate(43,-25)">
     <g id="узел5" transform="rotate(-23.58)">
-     <use xlink:href="коллекция.svg#звено" transform="rotate(106)"/>
+     <use xlink:href="#звено" transform="rotate(106)"/>
      <path d="m-11,38 l-18,62" /> 
     </g>
    </g>
@@ -269,9 +280,9 @@
    <g transform="translate(140,-80) ">
    <g transform="rotate(-30)">
     <g id="узел7" transform="rotate(0)">
-     <use xlink:href="коллекция.svg#звено" transform="rotate(90)"/>
-     <use xlink:href="коллекция.svg#шип" transform="translate(0,60) rotate(90)"/>
-     <use xlink:href="коллекция.svg#разрыв" transform="translate(0,90)"/>
+     <use xlink:href="#звено" transform="rotate(90)"/>
+     <use xlink:href="#шип" transform="translate(0,60) rotate(90)"/>
+	 <path d="m0,0 c0,-7 20,-7 20,0 0,7 20,7 20,0" transform="translate(-20,90)"/>
     </g>
    </g>
    </g>
@@ -284,9 +295,9 @@
   <g transform="rotate(30)">
   
    <g id="узел3" transform="rotate(0)">
-    <use xlink:href="коллекция.svg#звено" transform="rotate(-30) "/>
+    <use xlink:href="#звено" transform="rotate(-30) "/>
     <path d="m34,-20 l72,-40" />
-    <use xlink:href="коллекция.svg#звено" transform="translate(140,-80) rotate(150)"/>
+    <use xlink:href="#звено" transform="translate(140,-80) rotate(150)"/>
 
        <g transform="translate(140,-80)">
     <g id="поворот29" transform="rotate(60)">
@@ -319,10 +330,7 @@
    </g> 
    <text transform="translate(0,20)" id="длина26">0</text>
    
-   
   
-   
-   
    <g transform="translate(0,60)">
     <g id="поворот23" transform="rotate(90)">
      <g id='перенос23' transform="translate(-3,-40)">
@@ -343,9 +351,6 @@
    </g> 
    <text transform="translate(-18,140)" id="длина24">5</text>   
    
-
-   
-
   </g>
 </svg>
 
@@ -379,9 +384,9 @@
 
   
   <path d="m-20,-60 l0,20 20,0 0,20" />
-   <use xlink:href="коллекция.svg#шарнир"/>
+   <path d="m10,20 l 0,-20 m-10,0 l 20,0 m-10,20 l 0,20 m-10,0 l 20,0 m-5,-5 l0,-30 m-10,0 l 0,30" transform="translate(-10,-20)"/>
    <path d="m5,0 l10,0 0,80 m-40,0 l80,0 m-2,-3 l0,-20 -20,0 0,20 z" />
-   <use xlink:href="коллекция.svg#разрыв" transform="translate(-20,-60)"/>
+   <path d="m0,0 c0,-7 20,-7 20,0 0,7 20,7 20,0" transform="translate(-40,-60)"/>
  </g>
 </svg>
 </div>

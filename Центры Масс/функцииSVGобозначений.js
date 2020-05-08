@@ -61,8 +61,9 @@
 			}
 			telo.setAttribute("transform", trans.replace(/translate\(.*?\)/,"translate("+t.join(",")+")"));
 		}
-		document.getElementsByTagName("span")[0].innerHTML = value;
+		document.getElementById("coord").innerHTML = value;
 		calculCoord();
+		showCM();
 	}
 	
 	function makePolz(){
@@ -85,5 +86,10 @@
 			p = Math.pow(10,p);
 		}
 		return Math.round(p * this )/p;
+	}
+	
+	function showCM(){
+		document.getElementById("showCM").innerHTML = CM.join("<br>");
+		
 	}
 	
