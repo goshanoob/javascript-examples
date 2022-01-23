@@ -1,0 +1,21 @@
+driver,Bahrein,Imola,Portugal,Spania,Monaco,Azerbaijan,France,Shitia
+Max Verstappen,25,15,15,18,18,15,25,25
+Lewis Hamilton,18,25,18,25,6,18,18,15
+Valtteri Bottas,15,4,25,15,15,1,15,18
+Charles Leclerc,12,12,4,12,25,25,6,6
+Pierre Gasly,10,10,2,0,8,12,8,8
+Daniel Ricciardo,8,8,0,6,0,0,1,0
+Lando Norris,6,6,6,2,10,8,4,12
+Carlos Sainz,4,0,10,8,12,10,10,0
+Fernando Alonso,2,0,0,1,0,2,2,2
+Lance Stroll,1,1,0,0,0,0,0,1
+Sergio Perez,0,18,12,4,2,6,12,10
+Antonio Giovinazzi,0,0,0,0,1,0,0,0
+Yuki Tsunoda,0,0,0,0,0,4,0,4
+Kimi Raikkonen,0,0,0,0,0,0,0,0
+George Russell,0,0,0,0,0,0,0,0
+Esteban Ocon,0,2,8,10,0,0,0,0
+Nicholas Latifi,0,0,0,0,0,0,0,0
+Sebastian Vettel,0,0,1,0,4,0,0,0
+Mick Schumacher,0,0,0,0,0,0,0,0
+Nikita Mazepin,0,0,0,0,0,0,0,0

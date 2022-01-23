@@ -1,0 +1,9 @@
+textarea {
+	width: 300px;
+	height: 400px;
+}
+td {
+	border: solid 1px black;
+	padding: 3px;
+	text-align: left;
+}

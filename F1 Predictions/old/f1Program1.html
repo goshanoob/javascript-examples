@@ -1,0 +1,55 @@
+﻿<html>
+<head>
+</head>
+<body>
+<script>
+var results = 
+[
+["Ферстаппен", 1, 1, 5.910, 5.412],
+["Гасли", 2, 20, 6.166, 6.397],
+["Хэмилтон", 3, 4, 6.332, 5.796],
+["Боттас", 4, 12, 6.386, 6.251],
+["Цунода", 5, 15, 6.397, 6.451],
+["Алонсо", 6, 5, 6.519, 5.827],
+["Окон", 7, 3, 6.551, 5.790],
+["Стролл", 8, 8, 6.584, 6.079],
+["Джовинацци", 9, 10, 6.614, 6.145],
+["Леклер", 10, 13, 6.629, 6.270],
+["Сайнс", 11, 11, 6.630, 6.147],
+["Риккардо", 12, 2, 6.669, 5.748],
+["Перес", 13, 9, 6.696, 6.089],
+["Феттель", 14, 6, 6.708, 5.934],
+["Рассел", 15, 16, 6.848, 6.628],
+["Норрис", 16, 7, 6.861, 5.994],
+["Латифи", 17, 19, 7.180, 7.669],
+["Шумахер", 18, 17, 7.473, 6.886],
+["Райкконен", 19, 14, 7.823, 6.297],
+["Мазепин", 20, 18, 8.081, 7.404]
+], raiting = [];
+
+for(var i = 0, dinamic = ""; i < results.length; i++){
+	var firstResult = results[i][3], secondResult = results[i][4];
+	
+	if(firstResult > secondResult){
+		dinamic = " ^";
+	} else if (firstResult < secondResult){
+		dinamic = " v";
+	} else {
+		dinamic = " =";
+	}
+	
+	raiting[i] = [];
+	raiting[i][0] = results[i][0];
+	raiting[i][1] = ((firstResult + secondResult)) + dinamic;
+	
+}
+raiting.sort(sorting);
+document.body.innerHTML = raiting.join("<br>");
+
+
+function sorting(a, b){
+	return parseFloat(a[1]) - parseFloat(b[1]);
+}
+</script>
+</body>
+</html>

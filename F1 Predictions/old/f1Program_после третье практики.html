@@ -1,0 +1,132 @@
+﻿<html>
+<head>
+</head>
+<body>
+<script>
+
+
+var data = 
+[
+	["Ферстаппен", "Red Bull", "Honda", 2],
+	["Хэмилтон", "Mercedes", "Mercedes", 1],
+	["Гасли", "Alpha Tauri", "Honda", 6],
+	["Боттас", "Mercedes", "Mercedes", 3],
+	["Перес", "Red Bull", "Honda", 4],
+	["Цунода", "Alpha Tauri", "Honda", 5],
+	["Леклер", "Ferrari", "Ferrari", 7],
+	["Сайнс", "Ferrari", "Ferrari", 13],
+	["Феттель", "Aston Martin", "Mercedes", 10],
+	["Рассел", "Williams", "Mercedes", 14],
+	["Стролл", "Aston Martin", "Mercedes", 9],
+	["Алонсо", "Alpine", "Renault", 8],
+	["Джовинацци", "Alfa Romeo", "Ferrari", 11],
+	["Риккардо", "McLaren", "Mercedes", 17],
+	["Шумахер", "Haas", "Ferrari", 16],
+	["Окон", "Alpine", "Renault", 12],
+	["Норрис", "McLaren", "Mercedes", 19],
+	["Райкконен", "Alfa Romeo", "Ferrari", 15],
+	["Латифи", "Williams", "Mercedes", 18],
+	["Мазепин", "Haas", "Ferrari", 20]
+], 
+drivers = 
+[
+	["Ферстаппен", 45],
+	["Гасли", 18],
+	["Хэмилтон",  40],
+	["Боттас", 32],
+	["Цунода", 8],
+	["Алонсо", 12],
+	["Окон", 10],
+	["Стролл", 14],
+	["Джовинацци", 5],
+	["Леклер", 26],
+	["Сайнс", 20],
+	["Риккардо", 23],
+	["Перес", 36],
+	["Феттель", 16],
+	["Рассел", 4],
+	["Норрис", 29],
+	["Латифи", 1],
+	["Шумахер", 3],
+	["Райкконен", 6],
+	["Мазепин", 2]
+],
+shassis = 
+[
+	["Red Bull", 53],
+	["Alpha Tauri", 24],
+	["Mercedes", 46],
+	["Alpine", 20],
+	["Aston Martin", 29],
+	["Alfa Romeo", 16],
+	["Ferrari", 34],
+	["McLaren", 40],
+	["Williams", 13],
+	["Haas", 10]
+],
+engines = [
+	["Mercedes", 85],
+	["Honda", 60],
+	["Ferrari", 40],
+	["Renault", 25]
+];
+
+var raiting = [];
+for(var i = 0; i < engines.length; i++){
+	for(var j = 0; j < shassis.length; j++){
+		for(var k = 0; k < drivers.length; k++){
+			//for(var n = 0; n < drivers.length; n++){
+				var totalCost = engines[i][1] + shassis[j][1] + drivers[k][1] /*+ drivers[n][1]*/;
+				var totalRaiting = getResult(2, engines[i][0]) + getResult(1, shassis[j][0]) + getResult(0, drivers[k][0])/*+ getResult(0, drivers[n][0])*/;
+				if(totalCost <= 80 && totalRaiting > 45)
+					raiting.push([drivers[k][0]/*, drivers[n][0]*/, shassis[j][0], engines[i][0], totalCost, totalRaiting]);
+			//}
+		}
+	}
+}
+raiting.sort(sorting);
+document.body.innerHTML = raiting.join("<br>");
+document.body.innerHTML += "<br><b>Сортировка по стоимости: </b><br>"
+raiting.sort(sorting2);
+document.body.innerHTML += raiting.join("<br>");
+
+function getResult(parametr, value){
+	var result = 0;
+	for(var i = 0; i < data.length; i++){
+		if(data[i][parametr] === value)
+			result += getPoints2(data[i][3]);
+	}
+	return result;
+}
+
+function getPoints(parametr){
+	return 21 - parametr;
+}
+
+function getPoints2(parametr){
+	var points = 0;
+	switch(parametr){
+		case 1: points = 25; break;
+		case 2: points = 18; break;
+		case 3: points = 15; break;
+		case 4: points = 12; break;
+		case 5: points = 10; break;
+		case 6: points = 8; break;
+		case 7: points = 6; break;
+		case 8: points = 4; break;
+		case 9: points = 2; break;
+		case 10: points = 1; break;
+	}
+	return points;
+}
+
+function sorting(a, b){
+	return b[5] - a[5];
+}
+
+function sorting2(a, b){
+	return b[4] - a[4];
+}
+</script>
+</body>
+</html>

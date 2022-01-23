@@ -1,0 +1,23 @@
+﻿<html>
+	<head>
+		<link rel="stylesheet" href = "css/graphics.css" >
+		<script src = "scripts/Graphics.js" ></script>
+		<script src = "scripts/FileSystem.js" ></script>
+		<script src = "scripts/Statistics.js" ></script>
+		<script>
+			onload = () => {
+					const UI = new GraphF1UI();
+					UI.addListeners();
+					let a = 6;
+			}
+		</script>
+	</head>
+	<body>
+		<input id = "openFile" type = "file" value = "Открыть файл">
+		<button id = "calculate">Рассчитать</button>
+		<button id = "previousGraph"><</button>
+		<button id = "nextGraph">></button>
+		<canvas id = "graph" width="1200" height="800" style="border: 1px solid black"></canvas>
+		<div id = "results"></div>
+	</body>
+</html>

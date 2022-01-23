@@ -1,0 +1,816 @@
+﻿<html>
+<head>
+	<style>
+		#resultTable{
+			float: left;
+			display: none;
+		}
+		#predictionTable{
+			float: left;
+		}
+		#minRaiting{
+			width: 300;
+		}
+		#combos{
+			float: left;
+			
+		}
+		#teamsPoints{
+			width: 400px;
+			height: 400px;
+		}
+		td{
+			border: solid 1px black;
+			padding: 3px;
+			text-align: left;
+		}
+		.position{
+			width: 30px; 
+			border-style: solid;
+			border-width: 0px;
+		}
+	</style>
+</head>
+<body>
+
+<div id="predictionTable">
+	<table>
+		<tr>
+			<td>#</td>
+			<td>Кнопки</td>
+			<td>Гонщик</td>
+			<td>Шасси</td>
+			<td>Двигатель</td>
+			<td>Есть</td>
+		</tr>
+		<tr>
+			<td><input class="position" value="1"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Алонсо</td>
+			<td>Alpine</td>
+			<td>Renault</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="2"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Боттас</td>
+			<td>Mercedes</td>
+			<td>Mercedes</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="3"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Гасли</td>
+			<td>Alpha Tauri</td>
+			<td>Honda</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="4"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Джовинацци</td>
+			<td>Alfa Romeo</td>
+			<td>Ferrari</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="5"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Латифи</td>
+			<td>Williams</td>
+			<td>Mercedes</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="6"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Леклер</td>
+			<td>Ferrari</td>
+			<td>Ferrari</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="7"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Мазепин</td>
+			<td>Haas</td>
+			<td>Ferrari</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="8"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Норрис</td>
+			<td>McLaren</td>
+			<td>Mercedes</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="9"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Окон</td>
+			<td>Alpine</td>
+			<td>Renault</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="10"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Перес</td>
+			<td>Red Bull</td>
+			<td>Honda</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="11"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Райкконен</td>
+			<td>Alfa Romeo</td>
+			<td>Ferrari</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="12"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Расселл</td>
+			<td>Williams</td>
+			<td>Mercedes</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="13"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Риккардо</td>
+			<td>McLaren</td>
+			<td>Mercedes</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="14"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Сайнс</td>
+			<td>Ferrari</td>
+			<td>Ferrari</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="15"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Стролл</td>
+			<td>Aston Martin</td>
+			<td>Mercedes</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="16"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Ферстаппен</td>
+			<td>Red Bull</td>
+			<td>Honda</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="17"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Феттель</td>
+			<td>Aston Martin</td>
+			<td>Mercedes</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="18"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Хэмилтон</td>
+			<td>Mercedes</td>
+			<td>Mercedes</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="19"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Цунода</td>
+			<td>Alpha Tauri</td>
+			<td>Honda</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="20"></td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+			<td>Шумахер</td>
+			<td>Haas</td>
+			<td>Ferrari</td>
+			<td><input class="checkbox" type="checkbox"></td>
+		</tr>
+				
+	</table>
+
+
+</div>
+<div id="resultTable">
+	<table>
+		<tr>
+			<td>#</td>
+			<td>Гонщик</td>
+			<td>Шасси</td>
+			<td>Двигатель</td>
+			<td>Кнопки</td>
+		</tr>
+		<tr>
+			<td><input class="position" value="1"></td>
+			<td>Алонсо</td>
+			<td>Alpine</td>
+			<td>Renault</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="2"></td>
+			<td>Боттас</td>
+			<td>Mercedes</td>
+			<td>Mercedes</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="3"></td>
+			<td>Гасли</td>
+			<td>Alpha Tauri</td>
+			<td>Honda</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="4"></td>
+			<td>Джовинацци</td>
+			<td>Alfa Romeo</td>
+			<td>Ferrari</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="5"></td>
+			<td>Латифи</td>
+			<td>Williams</td>
+			<td>Mercedes</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="6"></td>
+			<td>Леклер</td>
+			<td>Ferrari</td>
+			<td>Ferrari</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="7"></td>
+			<td>Мазепин</td>
+			<td>Haas</td>
+			<td>Ferrari</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="8"></td>
+			<td>Норрис</td>
+			<td>McLaren</td>
+			<td>Mercedes</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="9"></td>
+			<td>Окон</td>
+			<td>Alpine</td>
+			<td>Renault</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="10"></td>
+			<td>Перес</td>
+			<td>Red Bull</td>
+			<td>Honda</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="11"></td>
+			<td>Райкконен</td>
+			<td>Alfa Romeo</td>
+			<td>Ferrari</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="12"></td>
+			<td>Расселл</td>
+			<td>Williams</td>
+			<td>Mercedes</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="13"></td>
+			<td>Риккардо</td>
+			<td>McLaren</td>
+			<td>Mercedes</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="14"></td>
+			<td>Сайнс</td>
+			<td>Ferrari</td>
+			<td>Ferrari</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="15"></td>
+			<td>Стролл</td>
+			<td>Aston Martin</td>
+			<td>Mercedes</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="16"></td>
+			<td>Ферстаппен</td>
+			<td>Red Bull</td>
+			<td>Honda</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="17"></td>
+			<td>Феттель</td>
+			<td>Aston Martin</td>
+			<td>Mercedes</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="18"></td>
+			<td>Хэмилтон</td>
+			<td>Mercedes</td>
+			<td>Mercedes</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="19"></td>
+			<td>Цунода</td>
+			<td>Alpha Tauri</td>
+			<td>Honda</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+		<tr>
+			<td><input class="position" value="20"></td>
+			<td>Шумахер</td>
+			<td>Haas</td>
+			<td>Ferrari</td>
+			<td><button class="buttonUp">&#9650;</button><button class="buttonDown">&#9660;</button></td>
+		</tr>
+				
+	</table>
+</div>
+
+<div id = "settings">
+	<div>
+		<span>Выбрано шасси: </span>
+		<input type="radio" id="shassiNone" name="shassis" value="Отсутствуют" checked>
+		<label for="shassiNone">Отсутствуют</label>
+		<input type="radio" id="shassiAlpine" name="shassis" value="Alpine">
+		<label for="shassiAlpine">Alpine</label>
+		<input type="radio" id="shassiFerrari" name="shassis" value="Ferrari">
+		<label for="shassiFerrari">Ferrari</label>
+		<input type="radio" id="shassiMercedes" name="shassis" value="Mercedes">
+		<label for="shassiMercedes">Mercedes</label>
+		<input type="radio" id="shassiAlfaRomeo" name="shassis" value="AlfaRomeo">
+		<label for="shassiAlfaRomeo">AlfaRomeo</label>
+		<input type="radio" id="shassiMcLaren" name="shassis" value="McLaren">
+		<label for="shassiMcLaren">McLaren</label>
+		<input type="radio" id="shassiRedBull" name="shassis" value="Red Bull">
+		<label for="shassiRedBull">Red Bull</label>
+		<input type="radio" id="shassiHaas" name="shassis" value="Haas">
+		<label for="shassiHaas">Haas</label>
+		<input type="radio" id="shassiWilliams" name="shassis" value="Williams">
+		<label for="shassiWilliams">Williams</label>
+		<input type="radio" id="shassiAlphaTauri" name="shassis" value="Alpha Tauri">
+		<label for="shassiAlphaTauri">Alpha Tauri</label>
+		<input type="radio" id="shassiAstonMartin" name="shassis" value="Aston Martin">
+		<label for="shassiAstonMartin">Aston Martin</label>
+	</div>
+	<div>
+		<span>Установлен двигатель: </span>
+		<input type="radio" id="engineNone" name="engine" value="Отсутствует" checked>
+		<label for="engineNone">Отсутствует</label>
+		<input type="radio" id="engineHonda" name="engine" value="Honda">
+		<label for="engineHonda">Honda</label>
+		<input type="radio" id="engineFerrari" name="engine" value="Ferrari">
+		<label for="engineFerrari">Ferrari</label>
+		<input type="radio" id="engineMercedes" name="engine" value="Mercedes">
+		<label for="engineMercedes">Mercedes</label>
+		<input type="radio" id="engineRenault" name="engine" value="Renault">
+		<label for="engineRenault">Renault</label>
+	</div>
+	<span> Бюджет: </span><input id = "budget" value = "80"><br>
+	<span> Мин. очков: </span><span id = "rangeValue">50</span><input id="minRaiting" type="range" value = "50" min = "10" max = "200" step="5"> 
+</div>
+
+<div id = "combos"></div>
+<div id = "teams"><textarea id = "teamsPoints"></textarea></div>
+
+<script>
+
+let radioEngine = document.getElementsByName("engine");
+for(let radio of radioEngine){
+	radio.addEventListener("change", getData);
+}
+let radioShassis = document.getElementsByName("shassis");
+for(let radio of radioEngine){
+	radio.addEventListener("change", getData);
+}
+
+
+document.getElementById("budget").addEventListener("input", function(){
+	budget = parseInt(this.value);
+	getData();
+});
+
+document.getElementById("minRaiting").addEventListener("input", function(){
+	minRaiting = parseInt(this.value);
+	document.getElementById("rangeValue").innerHTML = minRaiting;
+	getData();
+});
+
+const buttonsUp = document.getElementsByClassName("buttonUp");
+const buttonsDown = document.getElementsByClassName("buttonDown");
+for(let button of buttonsUp){
+	button.addEventListener("click", function(){
+		var row = this.parentNode.parentNode;
+		let number = row.firstElementChild.firstElementChild.value;
+		row.firstElementChild.firstElementChild.value = row.previousElementSibling.firstElementChild.firstElementChild.value;
+		row.previousElementSibling.firstElementChild.firstElementChild.value = number;
+		
+		row.parentNode.insertBefore(row, row.previousElementSibling);
+		getData();
+		//renumber();
+	});
+}
+for(let button of buttonsDown){
+	button.addEventListener("click", function(){
+		var row = this.parentNode.parentNode;
+		let number = row.firstElementChild.firstElementChild.value;
+		row.firstElementChild.firstElementChild.value = row.nextElementSibling.firstElementChild.firstElementChild.value;
+		row.nextElementSibling.firstElementChild.firstElementChild.value = number;
+		
+		row.parentNode.insertBefore(row.nextElementSibling, row);
+		getData();
+		//renumber();
+	});
+}
+
+let positions = document.getElementsByClassName("position");
+for(let position of positions){
+	position.addEventListener("change", function(){
+		var row = this.parentNode.parentNode;
+		let targetPostion = parseInt(this.value);
+		let oldNumber = row.rowIndex;
+		if(oldNumber < targetPostion){
+			oldNumber = targetPostion++;
+		}
+				
+		let newPosition = row.parentNode.children[targetPostion];
+		
+		row.parentNode.insertBefore(row, newPosition);
+		renumber(oldNumber);
+		
+		getData();
+	});
+}
+
+
+function renumber(limiter){
+	let rows = document.getElementById("predictionTable").getElementsByTagName("tr");
+	let reindexCount = limiter || rows.length - 1;
+	for(let i = 1; i <= reindexCount; i++){
+		rows[i].firstElementChild.firstElementChild.value = i;
+	}
+}
+
+
+var data = 
+[
+	["Ферстаппен", "Red Bull", "Honda", 1],
+	["Гасли", "Alpha Tauri", "Honda", 6],
+	["Хэмилтон", "Mercedes", "Mercedes", 2],
+	["Боттас", "Mercedes", "Mercedes", 7],
+	["Цунода", "Alpha Tauri", "Honda", 13],
+	["Алонсо", "Alpine", "Renault", 4],
+	["Окон", "Alpine", "Renault", 3],
+	["Стролл", "Aston Martin", "Mercedes", 9],
+	["Джовинацци", "Alfa Romeo", "Ferrari", 10],
+	["Леклер", "Ferrari", "Ferrari", 15],
+	["Сайнс", "Ferrari", "Ferrari", 11],
+	["Риккардо", "McLaren", "Mercedes", 5],
+	["Перес", "Red Bull", "Honda", 12],
+	["Феттель", "Aston Martin", "Mercedes", 8],
+	["Рассел", "Williams", "Mercedes", 16],
+	["Норрис", "McLaren", "Mercedes", 14],
+	["Латифи", "Williams", "Mercedes", 19],
+	["Шумахер", "Haas", "Ferrari", 18],
+	["Райкконен", "Alfa Romeo", "Ferrari", 17],
+	["Мазепин", "Haas", "Ferrari", 20]
+], 
+drivers = 
+[
+	["Ферстаппен", 45],
+	["Гасли", 18],
+	["Хэмилтон",  40],
+	["Боттас", 32],
+	["Цунода", 8],
+	["Алонсо", 12],
+	["Окон", 10],
+	["Стролл", 14],
+	["Джовинацци", 5],
+	["Леклер", 26],
+	["Сайнс", 20],
+	["Риккардо", 23],
+	["Перес", 36],
+	["Феттель", 16],
+	["Рассел", 4],
+	["Норрис", 29],
+	["Латифи", 1],
+	["Шумахер", 3],
+	["Райкконен", 6],
+	["Мазепин", 2]
+],
+shassis = 
+[
+	["Red Bull", 53],
+	["Alpha Tauri", 24],
+	["Mercedes", 46],
+	["Alpine", 20],
+	["Aston Martin", 29],
+	["Alfa Romeo", 16],
+	["Ferrari", 34],
+	["McLaren", 40],
+	["Williams", 13],
+	["Haas", 10]
+],
+engines = [
+	["Mercedes", 85],
+	["Honda", 60],
+	["Ferrari", 40],
+	["Renault", 25]
+],
+minRaiting = 50,
+budget = 80;
+
+
+
+let existDrivers = [], existEngine = "", existShassi = "";
+
+function getData(){
+	var predictionTable = document.getElementById("predictionTable").getElementsByTagName("tr");
+	for(var i = 0 ; i < drivers.length; i++){
+		data[i][0] = predictionTable[i+1].children[2].innerHTML;
+		data[i][1] = predictionTable[i+1].children[3].innerHTML;
+		data[i][2] = predictionTable[i+1].children[4].innerHTML;
+		data[i][3] = i + 1;
+	}
+
+	existDrivers = [];
+	let checkboxes = document.getElementsByClassName("checkbox");
+	
+	existShassi = document.querySelector('input[name="shassis"]:checked').value ;
+	existEngine = document.querySelector('input[name="engine"]:checked').value;
+		
+	for(let checkbox of checkboxes){
+		if(checkbox.checked)
+			existDrivers.push(checkbox.parentNode.parentNode.children[2].innerHTML);
+	}
+	
+	calculate();
+}
+
+function calculate(){
+	var raiting = [];
+	for(var i = 0; i < engines.length; i++){
+		// Стоимость и очки двигателя.
+		let engineCost = 0,
+		engineRaiting = getResult(2, engines[i][0]);
+		if(existEngine !== engines[i][0])
+			engineCost = engines[i][1];
+		for(var j = 0; j < shassis.length; j++){
+			// Стоимость и очки шасси.
+			let shassiCost = 0,
+			shassiRaiting = getResult(1, shassis[j][0]);
+			if(existShassi !== shassis[j][0])
+				shassiCost = shassis[j][1];
+		
+			
+			for(var k = 0; k < drivers.length; k++){
+				// Массив добавляемых в комбинацию гонщиков, их стоимость и очки.
+				let firstRacerCost = 0, 
+				firstRacerRaiting = getResult(0, drivers[k][0]);
+				if(existDrivers.indexOf(drivers[k][0]) === -1)
+					firstRacerCost = drivers[k][1];
+				// Общая стоимость команды.
+				let totalCostWithOneRacer = engineCost + shassiCost + firstRacerCost;
+				// Общая сумма очков.
+				let totalRaitingWithOneRacer = engineRaiting + shassiRaiting + firstRacerRaiting;
+				// Добавить комбинацию команды, если удовлетворяет условиям бюджета и минимуму очков.
+				if(totalCostWithOneRacer <= budget && totalRaitingWithOneRacer >= minRaiting)
+					raiting.push([drivers[k][0], shassis[j][0], engines[i][0], totalCostWithOneRacer, totalRaitingWithOneRacer]);
+				
+				
+				for(var n = 0; n < drivers.length; n++){
+					if(drivers[k][0] == drivers[n][0])
+						continue;
+						
+					let secondRacerCost = 0, 
+					secondRacerRaiting = getResult(0, drivers[n][0]);
+					if(existDrivers.indexOf(drivers[n][0]) === -1)
+						secondRacerCost = drivers[n][1];
+					// Общая стоимость команды с добавлением второго гонщика.
+					let totalCostWithTwoRacer = totalCostWithOneRacer + secondRacerCost;
+					// Общая сумма очков с добавлением второго гонщика.
+					let totalRaitingWithTwoRacer = totalRaitingWithOneRacer + secondRacerRaiting;
+					// Добавить комбинацию команды, если удовлетворяет условиям бюджета и минимуму очков.
+					if(totalCostWithTwoRacer <= budget && totalRaitingWithTwoRacer >= minRaiting)
+						raiting.push([drivers[n][0], drivers[k][0], shassis[j][0], engines[i][0], totalCostWithTwoRacer, totalRaitingWithTwoRacer]);	
+				
+				
+					for(var m = 0; m < drivers.length; m++){
+						if(drivers[n][0] === drivers[k][0] || drivers[n][0] === drivers[m][0] || drivers[k][0] === drivers[m][0])
+							continue;
+					
+						let thirdRacerCost = 0, 
+						thirdRacerRaiting = getResult(0, drivers[m][0]);
+						if(existDrivers.indexOf(drivers[m][0]) === -1)
+							thirdRacerCost = drivers[m][1];
+						// Общая стоимость команды с добавлением третьего гонщика.
+						let totalCostWithThreeRacer = totalCostWithTwoRacer + thirdRacerCost;
+						// Общая сумма очков с добавлением второго гонщика.
+						let totalRaitingWithThreeRacer = totalRaitingWithTwoRacer + thirdRacerRaiting;
+						// Добавить комбинацию команды, если удовлетворяет условиям бюджета и минимуму очков.
+						if(totalCostWithThreeRacer <= budget && totalRaitingWithThreeRacer >= minRaiting)
+							raiting.push([drivers[m][0], drivers[n][0], drivers[k][0], shassis[j][0], engines[i][0], totalCostWithThreeRacer, totalRaitingWithThreeRacer]);	
+					}
+				}
+			}
+		}
+	}
+	raiting = multiDimensionalUnique(raiting);
+	raiting.sort(sorting);
+	document.getElementById("combos").innerHTML = raiting.join("<br>");
+	/*
+	document.body.innerHTML += "<br><b>Сортировка по стоимости: </b><br>"
+	raiting.sort(sorting2);
+	document.body.innerHTML += raiting.join("<br>");
+	*/
+
+
+}
+
+
+function getResult(parametr, value){
+	var result = 0;
+	for(var i = 0; i < data.length; i++){
+		if(data[i][parametr] === value)
+			result += getPoints2(data[i][3]);
+	}
+	return result;
+}
+
+function getPoints(parametr){
+	return 21 - parametr;
+}
+
+function getPoints2(parametr){
+	var points = 0;
+	switch(parametr){
+		case 1: points = 25; break;
+		case 2: points = 18; break;
+		case 3: points = 15; break;
+		case 4: points = 12; break;
+		case 5: points = 10; break;
+		case 6: points = 8; break;
+		case 7: points = 6; break;
+		case 8: points = 4; break;
+		case 9: points = 2; break;
+		case 10: points = 1; break;
+	}
+	return points;
+}
+
+function sorting(a, b){
+	if(b[b.length - 1] === a[a.length - 1])
+		return a[a.length - 2] - b[b.length - 2];
+	return b[b.length - 1] - a[a.length - 1];
+}
+
+function sorting2(a, b){
+	return b[4] - a[4];
+}
+
+
+function multiDimensionalUnique(arr) {
+    var uniques = [];
+    var itemsFound = {};
+    for(var i = 0, l = arr.length; i < l; i++) {
+        var stringified = JSON.stringify(arr[i]);
+        if(itemsFound[stringified]) { continue; }
+        uniques.push(arr[i]);
+        itemsFound[stringified] = true;
+    }
+    return uniques;
+}
+
+document.getElementById("teamsPoints").onfocus = getTeamsResults;
+function getTeamsResults(){
+	document.getElementById("teamsPoints").value == "";
+	let teamsPoints = [
+		`1. Рэпчинский МС: ${ getResult(2, "Honda") + getResult(1, "Haas") + getResult(0, "Ферстаппен")}`,
+		`2. Страпон: ${getResult(2, "Honda") + getResult(1, "Haas") + getResult(0, "Цунода")}`,
+		`3. Брошенка: ${getResult(2, "Honda") + getResult(1, "Haas") + getResult(0, "Цунода")}`,
+		`4. Анальная пробка: ${getResult(2, "Renault") + getResult(1, "Alpine") + getResult(0, "Гасли") + getResult(0, "Алонсо") + getResult(0, "Норрис")}`,
+		`5. Инвентарная картчка 48318: ${getResult(2, "Renault") + getResult(1, "Alpine") + getResult(0, "Перес") + getResult(0, "Боттас")}`,
+		`6. Инвентраная карточка 48319: ${ getResult(2, "Renault") + getResult(1, "Haas") + getResult(0, "Ферстаппен")}`,
+		`7. Зафрешенные ананасики: ${getResult(2, "Honda") + getResult(1, "Haas") + getResult(0, "Цунода")}`,
+		`8. Триггистер-тразистер: ${ getResult(2, "Renault") + getResult(1, "Red Bull") + getResult(0, "Ферстаппен")}`,
+		`9. Антихайп ебал вас в рот: ${getResult(2, "Renault") + getResult(1, "Mercedes") + getResult(0, "Цунода") + getResult(0, "Алонсо") + getResult(0, "Ферстаппен")}`,
+		`10. Пися: ${getResult(2, "Honda") + getResult(1, "Haas") + getResult(0, "Цунода")}`,
+		`11. 11: ${getResult(2, "Honda") + getResult(1, "Mercedes") + getResult(0, "Латифи")}`
+	];
+
+	document.getElementById("teamsPoints").value  = teamsPoints.join("\n");
+}
+
+//setInterval(makeResponse, 10000);
+
+function makeResponse(){
+
+
+
+
+	const data = null;
+
+	const xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
+
+	xhr.addEventListener("readystatechange", function () {
+		if (this.readyState === this.DONE) {
+			console.log(this.responseText);
+		}
+	});
+
+	xhr.open("GET", "https://livetiming.formula1.com/static/2021/2021-06-27_Styrian_Grand_Prix/2021-06-27_Race/SPFeed.json", true);
+
+	xhr.send(data);
+
+	// 4. Если код ответа сервера не 200, то это ошибка
+	if (xhr.status != 200) {
+		document.body.innerHTML += xhr.status + xhr.statusText;
+	} else {
+		let enName = {
+			"VER": "Ферстаппен",
+			"HAM": "Хэмилтон",
+			"NOR": "Норрис",
+			"PER": "Перес",
+			"BOT": "Боттас",
+			"GAS": "Гасли",
+			"LEC": "Леклер",
+			"ALO": "Алонсо",
+			"STR": "Стролл",
+			"RUS": "Рассел",
+			"TSU": "Цунода",
+			"SAI": "Сайнс",
+			"RIC": "Риккардо",
+			"VET": "Феттель",
+			"GIO": "Джовинацци",
+			"LAT": "Латифи",
+			"OCO": "Окон",
+			"RAI": "Райкконен",
+			"MSC": "Шумахер",
+			"MAZ": "Мазепин"
+			}
+		let raceData = JSON.parse(responce.text);
+		for(let racer in raceData.free.data.DR){
+			if(data[i][0] == enName[race.F[0]]){
+				data[i][3] = parseInt(race.F[3]);
+			}
+		}
+	}
+}
+
+
+/*
+var unirest = require("unirest");
+
+var req = unirest("GET", "https://f1-live-motorsport-data.p.rapidapi.com/session/2757");
+
+req.headers({
+	"x-rapidapi-host": "f1-live-motorsport-data.p.rapidapi.com",
+	"useQueryString": true
+});
+
+
+req.end(function (res) {
+	if (res.error) throw new Error(res.error);
+
+	console.log(res.body);
+});
+*/
+
+</script>
+</body>
+</html>

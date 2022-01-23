@@ -1,0 +1,172 @@
+
+			<table>
+				<tbody><tr>
+					<td>#</td>
+					<td>Кнопки</td>
+					<td>Гонщик</td>
+					<td>Шасси</td>
+					<td>Двигатель</td>
+					<td>Есть</td>
+				</tr>
+				<tr>
+					<td><input class="position" value="1"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Ферстаппен</td>
+					<td>Red Bull</td>
+					<td>Honda</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="2"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Хэмилтон</td>
+					<td>Mercedes</td>
+					<td>Mercedes</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="3"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Боттас</td>
+					<td>Mercedes</td>
+					<td>Mercedes</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="4"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Норрис</td>
+					<td>McLaren</td>
+					<td>Mercedes</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="5"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Перес</td>
+					<td>Red Bull</td>
+					<td>Honda</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="6"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Леклер</td>
+					<td>Ferrari</td>
+					<td>Ferrari</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="7"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Сайнс</td>
+					<td>Ferrari</td>
+					<td>Ferrari</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="8"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Риккардо</td>
+					<td>McLaren</td>
+					<td>Mercedes</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="9"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Алонсо</td>
+					<td>Alpine</td>
+					<td>Renault</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="10"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Феттель</td>
+					<td>Aston Martin</td>
+					<td>Mercedes</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="11"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Гасли</td>
+					<td>Alpha Tauri</td>
+					<td>Honda</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="12"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Цунода</td>
+					<td>Alpha Tauri</td>
+					<td>Honda</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="13"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Расселл</td>
+					<td>Williams</td>
+					<td>Mercedes</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="14"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Стролл</td>
+					<td>Aston Martin</td>
+					<td>Mercedes</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="15"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Окон</td>
+					<td>Alpine</td>
+					<td>Renault</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="16"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Райкконен</td>
+					<td>Alfa Romeo</td>
+					<td>Ferrari</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="17"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Джовинацци</td>
+					<td>Alfa Romeo</td>
+					<td>Ferrari</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr>
+				
+				
+				
+				<tr>
+					<td><input class="position" value="18"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Латифи</td>
+					<td>Williams</td>
+					<td>Mercedes</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="19"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Шумахер</td>
+					<td>Haas</td>
+					<td>Ferrari</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr><tr>
+					<td><input class="position" value="20"></td>
+					<td><button class="buttonUp">▲</button><button class="buttonDown">▼</button></td>
+					<td>Мазепин</td>
+					<td>Haas</td>
+					<td>Ferrari</td>
+					<td><input class="racerCheck" type="checkbox"></td>
+				</tr>
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			</tbody></table>
+		

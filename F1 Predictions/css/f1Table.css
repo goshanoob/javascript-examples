@@ -1,0 +1,124 @@
+#resultTable{
+	float: left;
+	display: none;
+}
+
+#predictionTable{
+	float: left;
+	background: rgb(156, 255, 156);
+}
+
+#predictionTable2{
+	float: left;
+	background: rgb(255, 188, 240);
+}
+
+#minRaiting{
+	width: 300;
+}
+
+#combos{
+	float: left;
+	width: 550px;
+	height: 200px;
+	font-size: 14px;
+}
+
+#teamsPoints{
+	width: 400px;
+	height: 400px;
+}
+
+td{
+	border: solid 1px black;
+	padding: 3px;
+	text-align: left;
+}
+
+.position{
+	width: 30px; 
+	border-style: solid;
+	border-width: 0px;
+}
+
+
+/* Меню программы */
+#navigation ul
+{
+	list-style:none;
+	position:relative;
+	float:left;
+	margin:0;
+	padding:0
+}
+
+#navigation ul li
+{
+	display:block;
+	color:#333;
+	text-decoration:none;
+	font-weight:700;
+	font-size:12px;
+	line-height:32px;
+	padding:0 15px;
+	font-family:"HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif
+}
+
+#navigation ul li
+{
+	position:relative;
+	float:left;
+	margin:0;
+	padding:0;
+	cursor:default;
+}
+
+#navigation ul li.current-menu-item
+{
+	background:#ddd
+}
+
+#navigation ul li:hover
+{
+	background:#f6f6f6
+}
+
+#navigation ul ul
+{
+	display:none;
+	position:absolute;
+	top:100%;
+	left:0;
+	background:#fff;
+	padding:0
+}
+
+#navigation ul ul li
+{
+	float:none;
+	width:200px
+}
+
+#navigation ul ul li
+{
+	line-height:120%;
+	padding:10px 15px
+}
+
+#navigation ul ul ul
+{
+	top:0;
+	left:100%
+}
+
+#navigation ul li:hover > ul
+{
+	display:block
+}
+
+
+
+
+
+
+

@@ -1,0 +1,280 @@
+﻿<html>
+<head>
+<style>
+	div.positions{float:left; }
+	div.position{width: 30px; height: 30px; margin:5px; background-color: pink; text-align: center; }
+	div.driver{width: 300px; height: 30px; margin:5px; background-color: pink; text-align: center; cursor: pointer; 
+	
+	
+	}
+	div.driver:nth-child{margin-top: 2px}
+	#range{width: 300px}
+</style>
+</head>
+<body>
+<div class="positions"> 
+	<div class="position">1</div>
+	<div class="position">2</div>
+	<div class="position">3</div>
+	<div class="position">4</div>
+	<div class="position">5</div>
+	<div class="position">6</div>
+	<div class="position">7</div>
+	<div class="position">8</div>
+	<div class="position">9</div>
+	<div class="position">10</div>
+	<div class="position">11</div>
+	<div class="position">12</div>
+	<div class="position">13</div>
+	<div class="position">14</div>
+	<div class="position">15</div>
+	<div class="position">16</div>
+	<div class="position">17</div>
+	<div class="position">18</div>
+	<div class="position">19</div>
+	<div class="position">20</div>
+</div>
+<div id="driversList">
+	<div id="ferstappen" class="driver">Ферстаппен</div>
+	<div id="hamilton" class="driver">Хэмилтон</div>
+	<div id="gasli" class="driver">Гасли</div>
+	<div id="bottas" class="driver">Боттас</div>
+	<div id="peres" class="driver">Перес</div>
+	<div id="tsunoda" class="driver">Цунода</div>
+	<div id="lecler" class="driver">Леклер</div>
+	<div id="sains" class="driver">Сайнс</div>
+	<div id="vettel" class="driver">Феттель</div>
+	<div id="russel" class="driver">Рассел</div>
+	<div id="stroll" class="driver">Стролл</div>
+	<div id="alonso" class="driver">Алонсо</div>
+	<div id="giovinazzi" class="driver">Джовинацци</div>
+	<div id="riccardo" class="driver">Риккардо</div>
+	<div id="schumaher" class="driver">Шумахер</div>
+	<div id="ocon" class="driver">Окон</div>
+	<div id="norris" class="driver">Норрис</div>
+	<div id="raikkonen" class="driver">Райкконен</div>
+	<div id="latifi" class="driver">Латифи</div>
+	<div id="mazepin" class="driver">Мазепин</div>
+	<div id="emptyBox" class="driver"></div>
+</div>
+
+<input id="range" type="range" value = "50" min="10" max="200" step="5" ><span id="factor"></span>
+<button id="button">Посчитать</button>
+<div id="results">
+</div>
+<script>
+document.getElementById("range").oninput = function(){
+	factor = +this.value;
+	document.getElementById("factor").innerHTML = factor;
+	asasa();
+};
+document.getElementById("button").onclick = asasa;
+
+const driversList = document.getElementById("driversList");
+const drivers = driversList.getElementsByClassName("driver");
+
+for (const driver of drivers) {
+  driver.draggable = true;
+}
+
+driversList.addEventListener("dragstart", e => {
+  e.target.classList.add("selected");
+});
+
+driversList.addEventListener("dragend", e => {
+  const activeElement = driversList.querySelector(".selected");
+  const emptyBox = document.getElementById("emptyBox");
+  driversList.insertBefore(activeElement, emptyBox);
+  
+  driversList.appendChild(emptyBox);
+  activeElement.style.display = "block";
+  
+  e.target.classList.remove("selected");
+});
+
+const getNextElement = (cursorPosition, currentElement) => {
+  const currentElementCoord = currentElement.getBoundingClientRect();
+  const currentElementCenter = currentElementCoord.y + currentElementCoord.height / 2;
+  
+  const nextElement = (cursorPosition < currentElementCenter) ?
+    currentElement :
+    currentElement.nextElementSibling;
+  
+  return nextElement;
+};
+
+driversList.addEventListener("dragover", e => {
+  e.preventDefault();
+  
+  const activeElement = driversList.querySelector(".selected");
+  const currentElement = e.target;
+  const isMoveable = activeElement !== currentElement &&
+    currentElement.classList.contains("driver");
+    
+  if (!isMoveable) {
+    return;
+  }
+  
+  const nextElement = getNextElement(e.clientY, currentElement);
+  
+  if (
+    nextElement && 
+    activeElement === nextElement.previousElementSibling ||
+    activeElement === nextElement
+  ) {
+    return;
+  }
+	
+	const emptyBox = document.getElementById("emptyBox");
+	driversList.insertBefore(emptyBox, currentElement);
+	activeElement.style.display = "none";
+});
+
+var factor = 50;
+
+var data = 
+[
+	["Ферстаппен", "Red Bull", "Honda", 1],
+	["Хэмилтон", "Mercedes", "Mercedes", 2],
+	["Гасли", "Alpha Tauri", "Honda", 4],
+	["Боттас", "Mercedes", "Mercedes", 5],
+	["Перес", "Red Bull", "Honda", 12],
+	["Цунода", "Alpha Tauri", "Honda", 13],
+	["Леклер", "Ferrari", "Ferrari", 15],
+	["Сайнс", "Ferrari", "Ferrari", 11],
+	["Феттель", "Aston Martin", "Mercedes", 8],
+	["Рассел", "Williams", "Mercedes", 16],
+	["Стролл", "Aston Martin", "Mercedes", 9],
+	["Алонсо", "Alpine", "Renault", 7],
+	["Джовинацци", "Alfa Romeo", "Ferrari", 10],
+	["Риккардо", "McLaren", "Mercedes", 3],
+	["Шумахер", "Haas", "Ferrari", 18],
+	["Окон", "Alpine", "Renault", 6],
+	["Норрис", "McLaren", "Mercedes", 14],
+	["Райкконен", "Alfa Romeo", "Ferrari", 17],
+	["Латифи", "Williams", "Mercedes", 19],
+	["Мазепин", "Haas", "Ferrari", 20]
+];
+
+
+
+function readTable(){
+	const drivers = driversList.getElementsByClassName("driver");
+	for(var i = 0; i < drivers.length; i++){
+		for(var j = 0; j < data.length; j++){
+		
+			if(drivers[i].innerHTML === data[j][0]){
+				data[j][3] = i+1;
+			}
+		}
+	}
+}
+ 
+  
+function asasa(){
+readTable();
+var 
+drivers = 
+[
+	["Ферстаппен", 45],
+	["Гасли", 18],
+	["Хэмилтон",  40],
+	["Боттас", 32],
+	["Цунода", 8],
+	["Алонсо", 12],
+	["Окон", 10],
+	["Стролл", 14],
+	["Джовинацци", 5],
+	["Леклер", 26],
+	["Сайнс", 20],
+	["Риккардо", 23],
+	["Перес", 36],
+	["Феттель", 16],
+	["Рассел", 4],
+	["Норрис", 29],
+	["Латифи", 1],
+	["Шумахер", 3],
+	["Райкконен", 6],
+	["Мазепин", 2]
+],
+shassis = 
+[
+	["Red Bull", 53],
+	["Alpha Tauri", 24],
+	["Mercedes", 46],
+	["Alpine", 20],
+	["Aston Martin", 29],
+	["Alfa Romeo", 16],
+	["Ferrari", 34],
+	["McLaren", 40],
+	["Williams", 13],
+	["Haas", 10]
+],
+engines = [
+	["Mercedes", 85],
+	["Honda", 60],
+	["Ferrari", 40],
+	["Renault", 25]
+];
+
+var raiting = [];
+for(var i = 0; i < engines.length; i++){
+	for(var j = 0; j < shassis.length; j++){
+		for(var k = 0; k < drivers.length; k++){
+			for(var n = 0; n < drivers.length; n++){
+				var totalCost = engines[i][1] + shassis[j][1] + drivers[k][1] + drivers[n][1];
+				var totalRaiting = getResult(2, engines[i][0]) + getResult(1, shassis[j][0]) + getResult(0, drivers[k][0])+ getResult(0, drivers[n][0]);
+				if(totalCost <= 80 && totalRaiting > factor)
+					raiting.push([drivers[k][0], drivers[n][0], shassis[j][0], engines[i][0], totalCost, totalRaiting]);
+			}
+		}
+	}
+}
+raiting.sort(sorting);
+document.getElementById("results").innerHTML = raiting.join("<br>");
+document.getElementById("results").innerHTML += "<br><b>Сортировка по стоимости: </b><br>"
+raiting.sort(sorting2);
+document.getElementById("results").innerHTML += raiting.join("<br>");
+
+function getResult(parametr, value){
+	var result = 0;
+	for(var i = 0; i < data.length; i++){
+		if(data[i][parametr] === value)
+			result += getPoints2(data[i][3]);
+	}
+	return result;
+}
+
+function getPoints(parametr){
+	return 21 - parametr;
+}
+
+function getPoints2(parametr){
+	var points = 0;
+	switch(parametr){
+		case 1: points = 25; break;
+		case 2: points = 18; break;
+		case 3: points = 15; break;
+		case 4: points = 12; break;
+		case 5: points = 10; break;
+		case 6: points = 8; break;
+		case 7: points = 6; break;
+		case 8: points = 4; break;
+		case 9: points = 2; break;
+		case 10: points = 1; break;
+	}
+	return points;
+}
+
+function sorting(a, b){
+	return b[5] - a[5];
+}
+
+function sorting2(a, b){
+	return b[4] - a[4];
+}
+
+}
+</script>
+</body>
+</html>

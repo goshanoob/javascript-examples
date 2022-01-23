@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<title>Тест класса Statistics</title>
+		<script src = "scripts/Statistics.js"></script>
+	</head>
+	<body>
+		<div id="results"></div>
+		<script>
+			const showResults = (name, parametr) =>
+				document.getElementById("results").innerHTML += `<br>${name}: ${JSON.stringify(parametr)}`;
+
+			// Проверка числовых данных.
+			let data = [-12.258,-7,0,1,1,-13.43,-7,28,15,15.1,-7,1,-13.43,11,11];
+			let stats = new Statistics(data);
+			showResults("Ряд данных", data);
+			showResults("Сортированный ряд", data.sort());
+			showResults("Среднее арифметическое", stats.getMean());
+			showResults("Мода", stats.getModa());
+			showResults("Мода", stats.getModaAnother());
+			showResults("Медиана", stats.getMedian());
+			showResults("Число занчений", stats.getValueCounts());
+			showResults("Средневзвешенное", stats.getAverage([1,1,1,1,1,1,1,1,1,1,0,0,0,0,0]));
+			showResults("Дисперсия", stats.getDispersion());
+			showResults("Среднеквадратическое отклонение", stats.getSquare());
+		
+			// Проверка смешанных данных.
+			data = ["Огурцов",-12.258,"Огурцов",-7,0,1,1,-13.42,-7,"Огурцов",28,15,15.1,-7,1,-13.43,11,11,"Огурцов","Огурцов"];
+			stats.data = data;
+			showResults("Ряд данных", data);
+			showResults("Сортированный ряд", data.sort());
+			showResults("Среднее арифметическое", stats.getMean());
+			showResults("Мода", stats.getModa());
+			showResults("Мода", stats.getModaAnother());
+			showResults("Медиана", stats.getMedian());
+			showResults("Число занчений", stats.getValueCounts());
+			showResults("Средневзвешенное", stats.getAverage([1,1,1,1,1,1,1,1,1,1,0,0,0,0,0]));
+			
+		</script>
+	</body>
+</html>
