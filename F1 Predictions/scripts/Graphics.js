@@ -2,15 +2,15 @@ class GraphF1UI {
     // Текущий номер диаграммы.
     #i = 0;
     legend = [];
-    constructor(){
+
+    constructor() {
         this.data = [25, 30, 42];
         this.canvas = document.querySelector('#graph').getContext("2d");
         this.graph = new Graph(this.canvas, this.data, this.legend);
         this.showAllDiagrams();
     }
-    
-    
-    addListeners(){
+
+    addListeners() {
         // Загрузить результаты пилотов из файла, отрисовать диаграмму для первого.
         document.querySelector("#openFile").addEventListener("input", e => {
             new FS().loadFile(e.target.files[0]).then(
@@ -30,18 +30,18 @@ class GraphF1UI {
         document.querySelector("#calculate").addEventListener("click", this.calculate);
 
         // Отрисовать диаграмму для следующего пилота.
-        document.querySelector("#nextGraph").addEventListener("click", () =>{
+        document.querySelector("#nextGraph").addEventListener("click", () => {
             ++this.#i;
-            if(this.#i >= this.data.length)
+            if (this.#i >= this.data.length)
                 this.#i = 0;
             this.graph.data = this.data[this.#i];
             this.graph.legend = this.legend[this.#i];
             this.showAllDiagrams();
         });
         // Отрисовать диаграмму для предыдущего пилота.
-        document.querySelector("#previousGraph").addEventListener("click", () =>{
+        document.querySelector("#previousGraph").addEventListener("click", () => {
             --this.#i;
-            if(this.#i < 0)
+            if (this.#i < 0)
                 this.#i = this.data.length - 1;
             this.graph.data = this.data[this.#i];
             this.graph.legend = this.legend[this.#i];
@@ -50,7 +50,7 @@ class GraphF1UI {
     }
 
     // Отрисовать все доступные диаграммы.
-    showAllDiagrams(){
+    showAllDiagrams() {
         this.graph.clearCanvas();
         this.graph.showBarChart();
         this.graph.showTrendLine();
@@ -59,7 +59,7 @@ class GraphF1UI {
 }
 
 class Graph {
-    constructor(block, data, legend = []){
+    constructor(block, data, legend = []) {
         this.canvas = block;
         this.data = data;
         this.legend = legend;
@@ -79,32 +79,32 @@ class Graph {
     }
 
     // Построить столбчатую диаграмму.
-    showBarChart(){
+    showBarChart() {
         const bottom = this.settings.canvasBottom,
             width = this.settings.barWidth,
-            offset =  this.settings.barOffset,
+            offset = this.settings.barOffset,
             muliplex = this.settings.multiplication,
             isSign = this.settings.isBarSign,
             isName = this.settings.isBarName,
             canvas = this.canvas;
         let coordX = offset;
-        
+
         this.showLegend();
         this.data.forEach(height => {
             let coordY = bottom - height * muliplex;
             canvas.fillStyle = this.settings.barColor[4];
-            if(isSign){
+            if (isSign) {
                 canvas.font = "12px serif";
                 canvas.fillText(height.toFixed(), coordX + width / 2, coordY - 10);
             }
-                
+
             canvas.fillRect(coordX, coordY, width, height * muliplex);
             coordX += width + offset;
         });
     }
 
     // Получить точки данных на графике.
-    showDataPoints(){
+    showDataPoints() {
         const offset = this.settings.barOffset + this.settings.barWidth,
             bottom = this.settings.canvasBottom,
             radius = this.settings.pointRadius,
@@ -112,20 +112,20 @@ class Graph {
             fullCircle = 2 * Math.PI,
             canvas = this.canvas;
         let coordX = this.settings.barOffset + this.settings.barWidth / 2;
-        
+
         this.data.forEach((value, i) => {
             canvas.fillStyle = "black";
             canvas.beginPath();
             canvas.arc(coordX,
-                        bottom - value * muliplex,
-                        radius, 0, fullCircle);
+                bottom - value * muliplex,
+                radius, 0, fullCircle);
             canvas.fill();
             coordX += offset;
         });
     }
 
     // Получить линию тренда.
-    showTrendLine(){
+    showTrendLine() {
         const count = this.data.length,
             canvas = this.canvas,
             trend = new Statistics(this.data).getTrendLine(),
@@ -134,7 +134,7 @@ class Graph {
         const x1 = this.settings.barOffset,
             y1 = this.settings.canvasBottom - (k + b) * this.settings.multiplication,
             x2 = count * (this.settings.barWidth + x1),
-            y2 = this.settings.canvasBottom -  (k * count + b) * this.settings.multiplication;
+            y2 = this.settings.canvasBottom - (k * count + b) * this.settings.multiplication;
         canvas.strokeStyle = "red";
         canvas.lineWidth = "3";
         canvas.beginPath();
@@ -146,24 +146,24 @@ class Graph {
     }
 
     // Очистить область диаграмм.
-    clearCanvas(){
+    clearCanvas() {
         this.canvas.clearRect(0, 0, this.canvas.canvas.width, this.canvas.canvas.height);
     }
 
-    showLegend(){
-        if(this.legend.length !== 0){
+    showLegend() {
+        if (this.legend.length !== 0) {
             const canvas = this.canvas;
             canvas.font = "bold 48px serif";
             canvas.fillStyle = "red";
             canvas.beginPath();
-            canvas.fillText(this.legend, 
-                    canvas.canvas.width * 2 / 3, 
-                    this.settings.canvasBottom / 6);
+            canvas.fillText(this.legend,
+                canvas.canvas.width * 2 / 3,
+                this.settings.canvasBottom / 6);
             canvas.strokeStyle = "black";
             canvas.lineWidth = 1;
-            canvas.strokeText(this.legend, 
-                    canvas.canvas.width * 2 / 3, 
-                    this.settings.canvasBottom / 6);
+            canvas.strokeText(this.legend,
+                canvas.canvas.width * 2 / 3,
+                this.settings.canvasBottom / 6);
         }
     }
 }

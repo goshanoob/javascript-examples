@@ -3,12 +3,12 @@
 	display: none;
 }
 
-#predictionTable{
+#predictionFirstTable{
 	float: left;
 	background: rgb(156, 255, 156);
 }
 
-#predictionTable2{
+#predictionSecondTable{
 	float: left;
 	background: rgb(255, 188, 240);
 }
@@ -116,6 +116,10 @@ td{
 	display:block
 }
 
+.selectedTeam
+{
+	background-color: burlywood;
+}
 
 
 
