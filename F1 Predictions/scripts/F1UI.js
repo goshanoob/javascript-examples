@@ -332,8 +332,6 @@ class F1UI {
     // Добавить функции-слушатели к открытой таблице команд.
     addTeamsTableListeners() {
         const teams = document.querySelectorAll("#teamsTable tr:not(:first-child)");
-        const firstTable = document.querySelectorAll("#predictionFirstTable tr td:nth-child(3)");
-        const checkBoxes = [...document.querySelectorAll(".racerCheck")];
         const noneCheckBoxes = [...document.querySelectorAll("#shassiNone, #engineNone")];
         const shassisLabels = [...document.querySelectorAll("#settings div:first-child label")];
         const engineLabels = [...document.querySelectorAll("#settings div:nth-child(2) label")];
@@ -342,6 +340,9 @@ class F1UI {
 
         for (const team of teams) {
             team.addEventListener("click", e => {
+                const checkBoxes = [...document.querySelectorAll(".racerCheck")];
+                const firstTable = document.querySelectorAll("#predictionFirstTable tr td:nth-child(3)");
+                
                 checkBoxes.filter(check => check.checked).forEach(input => input.click());
                 teams.forEach(row => row.classList.remove("selectedTeam"));
 
