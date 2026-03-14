@@ -17,26 +17,31 @@ class F1 {
 
     // Подобрать допустимые комбинации.
     calculate() {
-        var raiting = [];
+        let raiting = [];
+        const enginePoints = new Map();
+        const chassisPoints = new Map();
+        const driverPoints = new Map();
+        
+        this.engines.forEach(eng => enginePoints.set(eng[0], this.getResultFromTwoTables(2, eng[0])));
+        this.shassis.forEach(ch => chassisPoints.set(ch[0], this.getResultFromTwoTables(1, ch[0])));
+        this.drivers.forEach(dr => driverPoints.set(dr[0], this.getResultFromTwoTables(0, dr[0])));
+        
         for (var i = 0; i < this.engines.length; i++) {
             // Стоимость и очки двигателя.
-            let engineCost = 0,
-                engineRaiting = this.getResultFromTwoTables(2, this.engines[i][0]);
-            if (this.existEngine !== this.engines[i][0])
-                engineCost = this.engines[i][1];
+            let engineCost = this.existEngine !== this.engines[i][0] ? this.engines[i][1] : 0;
+            let engineRaiting = enginePoints.get(this.engines[i][0]);
+            
             for (var j = 0; j < this.shassis.length; j++) {
                 // Стоимость и очки шасси.
-                let shassiCost = 0,
-                    shassiRaiting = this.getResultFromTwoTables(1, this.shassis[j][0]);
-                if (this.existShassi !== this.shassis[j][0])
-                    shassiCost = this.shassis[j][1];
+                let shassiCost = this.existShassi !== this.shassis[j][0] ? this.shassis[j][1] : 0;
+                let shassiRaiting = chassisPoints.get(this.shassis[j][0]);
 
                 for (var k = 0; k < this.drivers.length; k++) {
                     // Массив добавляемых в комбинацию гонщиков, их стоимость и очки.
-                    let firstRacerCost = 0,
-                        firstRacerRaiting = this.getResultFromTwoTables(0, this.drivers[k][0]);
-                    if (this.existDrivers.indexOf(this.drivers[k][0]) === -1)
-                        firstRacerCost = this.drivers[k][1];
+                    let firstRacerCost = this.existDrivers.indexOf(this.drivers[k][0]) === -1 
+                        ? this.drivers[k][1] : 0;
+                    let firstRacerRaiting = driverPoints.get(this.drivers[k][0]);
+                    
                     // Общая стоимость команды.
                     let totalCostWithOneRacer = engineCost + shassiCost + firstRacerCost;
                     // Общая сумма очков.
@@ -45,12 +50,11 @@ class F1 {
                     if (totalCostWithOneRacer <= this.budget && totalRaitingWithOneRacer >= this.minRaiting)
                         raiting.push([this.drivers[k][0], this.shassis[j][0], this.engines[i][0], totalCostWithOneRacer, totalRaitingWithOneRacer]);
 
-
                     for (var n = k + 1; n < this.drivers.length; n++) {
-                        let secondRacerCost = 0,
-                            secondRacerRaiting = this.getResultFromTwoTables(0, this.drivers[n][0]);
-                        if (this.existDrivers.indexOf(this.drivers[n][0]) === -1)
-                            secondRacerCost = this.drivers[n][1];
+                        let secondRacerCost = this.existDrivers.indexOf(this.drivers[n][0]) === -1
+                        ? this.drivers[n][1] : 0;
+                        let secondRacerRaiting = driverPoints.get(this.drivers[n][0]);
+                        
                         // Общая стоимость команды с добавлением второго гонщика.
                         let totalCostWithTwoRacer = totalCostWithOneRacer + secondRacerCost;
                         // Общая сумма очков с добавлением второго гонщика.
@@ -60,10 +64,10 @@ class F1 {
                             raiting.push([this.drivers[n][0], this.drivers[k][0], this.shassis[j][0], this.engines[i][0], totalCostWithTwoRacer, totalRaitingWithTwoRacer]);
 
                         for (var m = n + 1; m < this.drivers.length; m++) {
-                            let thirdRacerCost = 0,
-                                thirdRacerRaiting = this.getResultFromTwoTables(0, this.drivers[m][0]);
-                            if (this.existDrivers.indexOf(this.drivers[m][0]) === -1)
-                                thirdRacerCost = this.drivers[m][1];
+                            let thirdRacerCost = this.existDrivers.indexOf(this.drivers[m][0]) === -1
+                                ? this.drivers[m][1] : 0;
+                            let thirdRacerRaiting = driverPoints.get(this.drivers[m][0]);
+                            
                             // Общая стоимость команды с добавлением третьего гонщика.
                             let totalCostWithThreeRacer = totalCostWithTwoRacer + thirdRacerCost;
                             // Общая сумма очков с добавлением второго гонщика.
@@ -73,10 +77,10 @@ class F1 {
                                 raiting.push([this.drivers[m][0], this.drivers[n][0], this.drivers[k][0], this.shassis[j][0], this.engines[i][0], totalCostWithThreeRacer, totalRaitingWithThreeRacer]);
 
                             for (var p = m + 1; p < this.drivers.length; p++) {
-                                let fourthRacerCost = 0,
-                                    fourthRacerRaiting = this.getResultFromTwoTables(0, this.drivers[p][0]);
-                                if (this.existDrivers.indexOf(this.drivers[p][0]) === -1)
-                                    fourthRacerCost = this.drivers[p][1];
+                                let fourthRacerCost = this.existDrivers.indexOf(this.drivers[p][0]) === -1
+                                    ? this.drivers[p][1] : 0;
+                                let fourthRacerRaiting = driverPoints.get(this.drivers[p][0]);
+                                
                                 // Общая стоимость команды с добавлением третьего гонщика.
                                 let totalCostWithFourRacer = totalCostWithThreeRacer + fourthRacerCost;
                                 // Общая сумма очков с добавлением второго гонщика.
