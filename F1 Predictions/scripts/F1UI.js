@@ -307,7 +307,7 @@ class F1UI {
     drawTeamsTable() {
         let table = "<table><tr><td>#</td><td>Название</td><td>ID</td><td>Пилоты</td>\
 						<td>Шасси</td><td>Двигатель</td><td>Бюжет</td><td>Очки</td>\
-						<td>Прибавка</td><td>Сумма</td></tr>";
+						<td>Прибавка</td><td>Сумма</td><td>Ред.</td></tr>";
 
         this.f1.teams.forEach((team, i) => {
             const isSelected = (this.currentTeam === i + 1) ? ' class="selectedTeam"' : '';
@@ -322,10 +322,16 @@ class F1UI {
             table += `<td>${team.points}</td>`;
             table += `<td>${team.result}</td>`;
             table += `<td>${team.result + team.points}</td>`;
+            table += `<td class="edit-controls" data-index="${i}">
+                        <button class="editBtn">✏️</button>
+                        <button class="saveBtn" style="display:none;">✔️</button>
+                        <button class="cancelBtn" style="display:none;">❌</button>
+                      </td>`;
             table += "</tr>";
         });
 
         document.getElementById("teamsTable").innerHTML = table + "</table>";
+        this.setEditListeners();
     }
 
     // Добавить функции-слушатели к открытой таблице команд.
@@ -392,5 +398,107 @@ class F1UI {
         targetTable.innerHTML = originTable.innerHTML;
         this.setTableListeners();
         this.getDataFromTable();
+    }
+
+    setEditListeners() {
+        const tableContainer = document.getElementById("teamsTable");
+        
+        if (tableContainer.dataset.listenerAttached) 
+            return;
+        
+        tableContainer.dataset.listenerAttached = "true";
+        tableContainer.addEventListener("click", (e) => {
+            const target = e.target;
+            
+            if (target.tagName !== "BUTTON") 
+                return;
+
+            const row = target.closest("tr");
+            const index = target.closest("td").dataset.index;
+            const team = this.f1.teams[index];
+
+            const pilotsCell = row.cells[3]; // колонка Пилоты
+            const budgetCell = row.cells[6]; // колонка Бюджет
+
+            const editBtn = row.querySelector(".editBtn");
+            const saveBtn = row.querySelector(".saveBtn");
+            const cancelBtn = row.querySelector(".cancelBtn");
+            
+            if (target.classList.contains("editBtn")) {
+                pilotsCell.dataset.originalHtml = pilotsCell.innerHTML;
+                budgetCell.dataset.originalHtml = budgetCell.innerHTML;
+
+                const currentPilots = team.racers.split(" ");
+                let selectsHtml = "";
+                
+                for (let i = 0; i < 4; i++) {
+                    selectsHtml += `<select class="edit-pilot-select" style="display:block; margin-bottom:2px;">`;
+                    selectsHtml += `<option value="">--Пусто--</option>`;
+                    this.f1.drivers.forEach(driver => {
+                        const isSelected = currentPilots[i] === driver[0] ? "selected" : "";
+                        selectsHtml += `<option value="${driver[0]}" data-cost="${driver[1]}" ${isSelected}>${driver[0]} (${driver[1]}M)</option>`;
+                    });
+                    selectsHtml += `</select>`;
+                }
+                pilotsCell.innerHTML = selectsHtml;
+                
+                const originalBudget = team.budget;
+                const originalPilotsCost = currentPilots.reduce((sum, p) => {
+                    const driverData = this.f1.drivers.find(d => d[0] === p);
+                    return sum + (driverData ? driverData[1] : 0);
+                }, 0);
+
+                const selects = pilotsCell.querySelectorAll("select");
+                selects.forEach(select => {
+                    select.addEventListener("change", () => {
+                        let newPilotsCost = 0;
+                        selects.forEach(s => {
+                            const option = s.options[s.selectedIndex];
+                            if (option.value !== "") newPilotsCost += parseInt(option.dataset.cost);
+                        });
+
+                        const newBudget = originalBudget + originalPilotsCost - newPilotsCost;
+                        budgetCell.innerHTML = `<span style="color: ${newBudget < 0 ? 'red' : 'green'}; font-weight: bold;">${newBudget} + ${team.bonus}</span>`;
+                        saveBtn.disabled = newBudget < 0;
+                    });
+                });
+                
+                editBtn.style.display = "none";
+                saveBtn.style.display = "inline-block";
+                cancelBtn.style.display = "inline-block";
+            }
+            
+            if (target.classList.contains("saveBtn")) {
+                const selects = pilotsCell.querySelectorAll("select");
+                const newPilots = [];
+                selects.forEach(s => {
+                    if (s.value !== "") newPilots.push(s.value);
+                });
+                
+                const originalPilotsCost = team.racers.split(" ").reduce((sum, p) => {
+                    const driverData = this.f1.drivers.find(d => d[0] === p);
+                    return sum + (driverData ? driverData[1] : 0);
+                }, 0);
+
+                let newPilotsCost = 0;
+                selects.forEach(s => {
+                    const option = s.options[s.selectedIndex];
+                    if (option.value !== "") newPilotsCost += parseInt(option.dataset.cost);
+                });
+
+                team.budget = team.budget + originalPilotsCost - newPilotsCost;
+                team.racers = newPilots.join(" ");
+                this.f1.calculateTeamsResults();
+                this.drawTeamsTable();
+            }
+            
+            if (target.classList.contains("cancelBtn")) {
+                pilotsCell.innerHTML = pilotsCell.dataset.originalHtml;
+                budgetCell.innerHTML = budgetCell.dataset.originalHtml;
+                editBtn.style.display = "inline-block";
+                saveBtn.style.display = "none";
+                cancelBtn.style.display = "none";
+            }
+        });
     }
 }
