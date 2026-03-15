@@ -6,6 +6,7 @@ class F1UI {
     constructor() {
         this.f1Data = new F1Data();
         this.f1 = new F1(this.f1Data);
+        this.currentTeam = -1;
     }
 
     // Подключить графический интерфейс при помощи функций-слушателей.
@@ -143,117 +144,117 @@ class F1UI {
         return isCorrect;
     }
 
-    // Зарегистрировать функции-слашатели для элементов управления таблицей.
+    // Зарегистрировать функции-слушатели для элементов управления таблицей.
     setTableListeners() {
-        // Поднять строку вверх на одну позицию.
-        const moveRowUpHandler = e => {
-            const row = e.target.parentNode.parentNode;
-
-            if (row.rowIndex === 1)
-                return;
-
-            const firstInput = row.firstElementChild.firstElementChild;
-            const secondInput = row.previousElementSibling.firstElementChild.firstElementChild;
-            const number = firstInput.value;
-
-            // Поменять порядковые номера в пером столбце местами.
-            firstInput.setAttribute("value", secondInput.getAttribute("value"));
-            firstInput.value = secondInput.value;
-            secondInput.setAttribute("value", number);
-            secondInput.value = number;
-
-            // Поменять строки местами.
-            row.parentNode.insertBefore(row, row.previousElementSibling);
-            this.getDataFromTable();
-        }
-
-        // Опустить строку вниз на одну позицию.
-        const moveRowDownHandler = e => {
-            const row = e.target.parentNode.parentNode;
-
-            if (row.rowIndex === row.parentNode.children.length - 1)
-                return;
-
-            const firstInput = row.firstElementChild.firstElementChild;
-            const secondInput = row.nextElementSibling.firstElementChild.firstElementChild;
-            const number = firstInput.value;
-
-            firstInput.setAttribute("value", secondInput.getAttribute("value"));
-            firstInput.value = secondInput.value;
-            secondInput.setAttribute("value", number);
-            secondInput.value = number;
-            row.parentNode.insertBefore(row.nextElementSibling, row);
-            this.getDataFromTable();
-        }
-
-        // Обработать выбор пилота в таблице.
-        const changeRacerChecksHandler = _ => {
-            this.f1.existDrivers.length = 0;
-
-            const checkedRacers = document.querySelectorAll('.racerCheck:checked');
-
-            for (let racer of checkedRacers) {
-                this.f1.existDrivers.push(racer.parentNode.parentNode.children[2].innerHTML);
-            }
-
-            this.showTeamCombinations();
-        }
-
-        // Переместить строку на указанную позицию.
-        const changeRowPlaceHandler = e => {
-            const row = e.target.parentNode.parentNode;
-            const table = row.closest("div").id;
-            let targetPosition = parseInt(e.target.value);
-            let oldNumber = row.rowIndex;
-
-            // Обработать ввод недопустимого значения.
-            if (targetPosition > row.parentNode.children.length - 1 || targetPosition < 1) {
-                e.target.value = oldNumber;
-                return;
-            }
-
-            // Необязательно перенумеровывать всю таблицу. Определить конечную строку перенумерации.
-            if (oldNumber < targetPosition) {
-                oldNumber = targetPosition++;
-            }
-
-            const newPosition = row.parentNode.children[targetPosition];
-
-            row.parentNode.insertBefore(row, newPosition);
-            // Перенумеровать номера строк после изменения их порядка.
-            this.renumber(table, oldNumber);
-            this.getDataFromTable();
-        }
-        
         // Подключить кнопки понижения\повышения строк.
         const buttonsUp = document.getElementsByClassName("buttonUp");
         const buttonsDown = document.getElementsByClassName("buttonDown");
 
         for (let button of buttonsUp) {
-            button.removeEventListener("click", moveRowUpHandler);
-            button.addEventListener("click", moveRowUpHandler);
+            button.removeEventListener("click", this.moveRowUpHandler);
+            button.addEventListener("click", this.moveRowUpHandler);
         }
 
         for (let button of buttonsDown) {
-            button.removeEventListener("click", moveRowDownHandler);
-            button.addEventListener("click", moveRowDownHandler);
+            button.removeEventListener("click", this.moveRowDownHandler);
+            button.addEventListener("click", this.moveRowDownHandler);
         }
 
         // Подключить выбор пилотов.
         const racerChecks = document.getElementsByClassName("racerCheck");
 
         for (let check of racerChecks) {
-            check.removeEventListener("change", changeRacerChecksHandler);
-            check.addEventListener("change", changeRacerChecksHandler);
+            check.removeEventListener("change", this.changeRacerChecksHandler);
+            check.addEventListener("change", this.changeRacerChecksHandler);
         }
 
         // Изменить порядок строк при изменении их порядкового номера в первом столбце.
         const positions = document.getElementsByClassName("position");
 
         for (let position of positions) {
-            position.removeEventListener("change", changeRowPlaceHandler);
-            position.addEventListener("change", changeRowPlaceHandler);
+            position.removeEventListener("change", this.changeRowPlaceHandler);
+            position.addEventListener("change", this.changeRowPlaceHandler);
         }
+    }
+
+    // Поднять строку вверх на одну позицию.
+    moveRowUpHandler = e => {
+        const row = e.target.parentNode.parentNode;
+
+        if (row.rowIndex === 1)
+            return;
+
+        const firstInput = row.firstElementChild.firstElementChild;
+        const secondInput = row.previousElementSibling.firstElementChild.firstElementChild;
+        const number = firstInput.value;
+
+        // Поменять порядковые номера в пером столбце местами.
+        firstInput.setAttribute("value", secondInput.getAttribute("value"));
+        firstInput.value = secondInput.value;
+        secondInput.setAttribute("value", number);
+        secondInput.value = number;
+
+        // Поменять строки местами.
+        row.parentNode.insertBefore(row, row.previousElementSibling);
+        this.getDataFromTable();
+    }
+
+    // Опустить строку вниз на одну позицию.
+    moveRowDownHandler = e => {
+        const row = e.target.parentNode.parentNode;
+
+        if (row.rowIndex === row.parentNode.children.length - 1)
+            return;
+
+        const firstInput = row.firstElementChild.firstElementChild;
+        const secondInput = row.nextElementSibling.firstElementChild.firstElementChild;
+        const number = firstInput.value;
+
+        firstInput.setAttribute("value", secondInput.getAttribute("value"));
+        firstInput.value = secondInput.value;
+        secondInput.setAttribute("value", number);
+        secondInput.value = number;
+        row.parentNode.insertBefore(row.nextElementSibling, row);
+        this.getDataFromTable();
+    }
+
+    // Обработать выбор пилота в таблице.
+    changeRacerChecksHandler = _ => {
+        this.f1.existDrivers.length = 0;
+
+        const checkedRacers = document.querySelectorAll('.racerCheck:checked');
+
+        for (let racer of checkedRacers) {
+            this.f1.existDrivers.push(racer.parentNode.parentNode.children[2].innerHTML);
+        }
+
+        this.showTeamCombinations();
+    }
+
+    // Переместить строку на указанную позицию.
+    changeRowPlaceHandler = e => {
+        const row = e.target.parentNode.parentNode;
+        const table = row.closest("div").id;
+        let targetPosition = parseInt(e.target.value);
+        let oldNumber = row.rowIndex;
+
+        // Обработать ввод недопустимого значения.
+        if (targetPosition > row.parentNode.children.length - 1 || targetPosition < 1) {
+            e.target.value = oldNumber;
+            return;
+        }
+
+        // Необязательно перенумеровывать всю таблицу. Определить конечную строку перенумерации.
+        if (oldNumber < targetPosition) {
+            oldNumber = targetPosition++;
+        }
+
+        const newPosition = row.parentNode.children[targetPosition];
+
+        row.parentNode.insertBefore(row, newPosition);
+        // Перенумеровать номера строк после изменения их порядка.
+        this.renumber(table, oldNumber);
+        this.getDataFromTable();
     }
 
     // Изменить значения в полях ввода первого столбца таблицы по порядку до строки,
@@ -313,7 +314,9 @@ class F1UI {
 						<td>Прибавка</td><td>Сумма</td></tr>";
 
         this.f1.teams.forEach((team, i) => {
-            table += `<tr><td>${i + 1}</td>`;
+            const isSelected = (this.currentTeam === i + 1) ? ' class="selectedTeam"' : '';
+            
+            table += `<tr${isSelected}><td>${i + 1}</td>`;
             table += `<td>${team.name}</td>`;
             table += `<td>${team.id}</td>`;
             table += `<td>${team.racers}</td>`;
@@ -348,13 +351,13 @@ class F1UI {
 
                 let selectedTeam = parseInt(e.currentTarget.firstChild.innerText);
 
-                if (currentTeam == selectedTeam) {
+                if (this.currentTeam === selectedTeam) {
                     noneCheckBoxes.forEach(input => input.click());
-                    currentTeam = -1
+                    this.currentTeam = -1
                     return;
                 }
 
-                currentTeam = selectedTeam;
+                this.currentTeam = selectedTeam;
 
                 let teamRow = this.f1.teams[selectedTeam - 1];
                 let teamMates = teamRow.racers.split(" ");
