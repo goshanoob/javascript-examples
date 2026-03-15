@@ -1,5 +1,4 @@
-// Класс F1 реализует основную логику приложеия. Методы класса:
-
+// Класс F1 реализует основную логику приложения.
 class F1 {
     constructor(F1Data) {
         this.data1 = F1Data.data1;
@@ -26,17 +25,17 @@ class F1 {
         this.shassis.forEach(ch => chassisPoints.set(ch[0], this.getResultFromTwoTables(1, ch[0])));
         this.drivers.forEach(dr => driverPoints.set(dr[0], this.getResultFromTwoTables(0, dr[0])));
         
-        for (var i = 0; i < this.engines.length; i++) {
+        for (let i = 0; i < this.engines.length; i++) {
             // Стоимость и очки двигателя.
             let engineCost = this.existEngine !== this.engines[i][0] ? this.engines[i][1] : 0;
             let engineRaiting = enginePoints.get(this.engines[i][0]);
             
-            for (var j = 0; j < this.shassis.length; j++) {
+            for (let j = 0; j < this.shassis.length; j++) {
                 // Стоимость и очки шасси.
                 let shassiCost = this.existShassi !== this.shassis[j][0] ? this.shassis[j][1] : 0;
                 let shassiRaiting = chassisPoints.get(this.shassis[j][0]);
 
-                for (var k = 0; k < this.drivers.length; k++) {
+                for (let k = 0; k < this.drivers.length; k++) {
                     // Массив добавляемых в комбинацию гонщиков, их стоимость и очки.
                     let firstRacerCost = this.existDrivers.indexOf(this.drivers[k][0]) === -1 
                         ? this.drivers[k][1] : 0;
@@ -50,7 +49,7 @@ class F1 {
                     if (totalCostWithOneRacer <= this.budget && totalRaitingWithOneRacer >= this.minRaiting)
                         raiting.push([this.drivers[k][0], this.shassis[j][0], this.engines[i][0], totalCostWithOneRacer, totalRaitingWithOneRacer]);
 
-                    for (var n = k + 1; n < this.drivers.length; n++) {
+                    for (let n = k + 1; n < this.drivers.length; n++) {
                         let secondRacerCost = this.existDrivers.indexOf(this.drivers[n][0]) === -1
                         ? this.drivers[n][1] : 0;
                         let secondRacerRaiting = driverPoints.get(this.drivers[n][0]);
@@ -63,7 +62,7 @@ class F1 {
                         if (totalCostWithTwoRacer <= this.budget && totalRaitingWithTwoRacer >= this.minRaiting)
                             raiting.push([this.drivers[n][0], this.drivers[k][0], this.shassis[j][0], this.engines[i][0], totalCostWithTwoRacer, totalRaitingWithTwoRacer]);
 
-                        for (var m = n + 1; m < this.drivers.length; m++) {
+                        for (let m = n + 1; m < this.drivers.length; m++) {
                             let thirdRacerCost = this.existDrivers.indexOf(this.drivers[m][0]) === -1
                                 ? this.drivers[m][1] : 0;
                             let thirdRacerRaiting = driverPoints.get(this.drivers[m][0]);
@@ -76,7 +75,7 @@ class F1 {
                             if (totalCostWithThreeRacer <= this.budget && totalRaitingWithThreeRacer >= this.minRaiting)
                                 raiting.push([this.drivers[m][0], this.drivers[n][0], this.drivers[k][0], this.shassis[j][0], this.engines[i][0], totalCostWithThreeRacer, totalRaitingWithThreeRacer]);
 
-                            for (var p = m + 1; p < this.drivers.length; p++) {
+                            for (let p = m + 1; p < this.drivers.length; p++) {
                                 let fourthRacerCost = this.existDrivers.indexOf(this.drivers[p][0]) === -1
                                     ? this.drivers[p][1] : 0;
                                 let fourthRacerRaiting = driverPoints.get(this.drivers[p][0]);
@@ -100,10 +99,10 @@ class F1 {
 
     // Получить результат состязания. Первый параметр метода определяет поиск по гонщику, 
     // шасси либо двигателю. Второй параметр - искомое совпадение в массиве данных.
-    getResult(parametr, value) {
-        var result = 0;
-        for (var i = 0; i < this.data1.length; i++) {
-            if (this.data1[i][parametr] === value)
+    getResult(parameter, value) {
+        let result = 0;
+        for (let i = 0; i < this.data1.length; i++) {
+            if (this.data1[i][parameter] === value)
                 result += this.getPoints(this.data1[i][3]);
         }
         return result;
@@ -111,37 +110,18 @@ class F1 {
 
     // Получить очки по результатам двух состязаний.
     getResultFromTwoTables(parameter, value) {
-
         return this.getResultFromFirstTable(parameter, value) + this.getResultFromSecondTable(parameter, value);
-
-        /*
-        
-        let result = 0;
-
-        for (let i = 0; i < this.data1.length; i++) {
-            if (this.data1[i][parametr] === value) {
-                result += this.getPoints(this.data1[i][3]);
-            }
-        }
-
-        for (let i = 0; i < this.data2.length; i++) {
-            if (this.data2[i][parametr] === value) {
-                result += this.getPoints(this.data2[i][3]);
-            }
-        }
-
-        return result;*/
     }
 
-    // Получить очки из первой табилцы.
+    // Получить очки из первой таблицы.
     getResultFromFirstTable = (parameter, value) =>
         this.getResultFromTable(this.data1, parameter, value);
 
-    // Получить очки из второй табилцы.
+    // Получить очки из второй таблицы.
     getResultFromSecondTable = (parameter, value) =>
         this.getResultFromTable(this.data2, parameter, value);
 
-    // Получить очки из переданной табилцы.
+    // Получить очки из переданной таблицы.
     getResultFromTable(table, parameter, value) {
         let result = 0;
 
@@ -161,19 +141,12 @@ class F1 {
         return points[position] || 0;
     }
 
-    // Вернуть заработанные очки. Альтернативный способ посчета очков. 
-    // Учитывает конкуренцию во второй половине таблицы.
-    getPointsForEveryone(parametr) {
-        return 23 - parametr;
-    }
-
     // Сортировать двумерный массив комбинаций команд по убыванию заработанных очков. 
-    // В случае равнества - по возрастанию стоимости команды .
+    // В случае равенства - по возрастанию стоимости команды.
     sorting(a, b) {
-        const result = b[b.length - 1] === a[a.length - 1] ?
+        return b[b.length - 1] === a[a.length - 1] ?
             a[a.length - 2] - b[b.length - 2] :
             b[b.length - 1] - a[a.length - 1];
-        return result;
     }
 
     // Сортировать по стоимости команды.
@@ -205,7 +178,7 @@ class F1 {
                 + this.getResultFromTwoTables(2, team.engine);
 
 
-            let fistResult =
+            let firstResult =
                 team.racers.split(/\s+/).reduce((sum, driver) =>
                     sum + this.getResultFromFirstTable(0, driver), 0)
                 + this.getResultFromFirstTable(1, team.shassi)
@@ -217,7 +190,7 @@ class F1 {
                 + this.getResultFromSecondTable(1, team.shassi)
                 + this.getResultFromSecondTable(2, team.engine);
             
-            team.bonus = this.getBonus(fistResult) + this.getBonus(secondResult);
+            team.bonus = this.getBonus(firstResult) + this.getBonus(secondResult);
         });
     }
 

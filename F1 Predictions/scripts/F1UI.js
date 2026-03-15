@@ -1,7 +1,4 @@
-﻿// Класс F1UI описывает графический интерфейс. Методы класса:
-// setEventListeners() - зарегистрировать функции-слушатели для элментов интерфейса на странице;
-// getTableData() - собирает информацию из форм на странице.
-
+﻿// Класс F1UI описывает графический интерфейс.
 class F1UI {
     constructor() {
         this.f1Data = new F1Data();
@@ -17,19 +14,18 @@ class F1UI {
 
                 const openedTeams = e.target.result.split("\r\n");
 
-                // Проврить формат данных в файле.
+                // Проверить формат данных в файле.
                 if (!this.testTeamFormatFile(openedTeams)) {
                     console.log("Неверный формат файла команд!");
                     return;
                 }
 
-                // Создать объеты команд.
+                // Создать объекты команд.
                 const teams = [];
 
                 openedTeams.forEach(teamStaff => {
                     const staff = teamStaff.split(","),
                         teamName = staff[0].match(/\d+\.\s+(.+)\s+(\d+$)/i);
-                    //const racers = staff[1].split(/\s+/);
                     const team = {};
                     team.id = teamName[2];
                     team.name = teamName[1];
@@ -44,7 +40,7 @@ class F1UI {
                 this.f1.teams = teams;
                 // Вычислить результаты команды на этапе.
                 this.f1.calculateTeamsResults();
-                // Орисовать таблицу команд.
+                // Отрисовать таблицу команд.
                 this.drawTeamsTable();
                 // Добавить к таблице команд взаимодействия.
                 this.addTeamsTableListeners()
@@ -113,7 +109,7 @@ class F1UI {
                     secondTable.remove();
                 }
 
-                // Подключить функции слушатели для элементов управления таблицой.
+                // Подключить функции слушатели для элементов управления таблицей.
                 this.setTableListeners();
                 this.getDataFromTable();
             });
@@ -188,7 +184,7 @@ class F1UI {
         const secondInput = row.previousElementSibling.firstElementChild.firstElementChild;
         const number = firstInput.value;
 
-        // Поменять порядковые номера в пером столбце местами.
+        // Поменять порядковые номера в первом столбце местами.
         firstInput.setAttribute("value", secondInput.getAttribute("value"));
         firstInput.value = secondInput.value;
         secondInput.setAttribute("value", number);
@@ -289,21 +285,21 @@ class F1UI {
         this.calculateTeams();
     }
 
-    // Рассчитать результаты команд и перестроить стаблицу.
+    // Рассчитать результаты команд и перестроить таблицу.
     calculateTeams = () => {
         if (!document.getElementById("recalcCommands").checked) return;
 
         // Вычислить результаты команд на этапе.
         this.f1.calculateTeamsResults();
 
-        // Отобразить таблицу с результатами сфомированных команд, если они загружены.
+        // Отобразить таблицу с результатами сформированных команд, если они загружены.
         if (this.f1.teams.length !== 0) {
             this.drawTeamsTable();
             this.addTeamsTableListeners();
         }
     }
 
-    // Вывести комбинации команд и деталей, вычисленные по заданным криетриям. 
+    // Вывести комбинации команд и деталей, вычисленные по заданным критериям. 
     showTeamCombinations = () =>
         document.getElementById("combos").value = this.f1.calculate().join("\n");
 

@@ -53,7 +53,7 @@ class Statistics {
         let elements = Object.entries(this.getValueCounts());
         elements.sort((a, b) => b[1] - a[1]);
         let modeValue = elements[0][1], modes = [];
-        // Модальными являются первые значения в сотированном массиве с одинаковым числом повторов.
+        // Модальными являются первые значения в отсортированном массиве с одинаковым числом повторов.
         elements.forEach(current => {
             if (current[1] === modeValue)
                 modes.push(current[0]);
@@ -61,7 +61,7 @@ class Statistics {
         return modes;
     }
 
-    // Альтернативный вариант вычисления моды. Возвращет массив с модами типа String.
+    // Альтернативный вариант вычисления моды. Возвращает массив с модами типа String.
     getModaAnother() {
         // Массив мод, объект с числом повторений значений ряда.
         let modes = [], valueCounts = this.getValueCounts(),
