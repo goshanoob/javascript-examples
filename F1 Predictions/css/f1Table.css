@@ -121,6 +121,37 @@ td{
 	background-color: burlywood;
 }
 
+.edit-pilot-select {
+	display: block;
+	margin-bottom: 2px;
+	width: 100%;
+}
+
+.edit-controls .saveBtn,
+.edit-controls .cancelBtn {
+	display: none;
+}
+
+.edit-controls.is-editing .editBtn {
+	display: none;
+}
+
+.edit-controls.is-editing .saveBtn,
+.edit-controls.is-editing .cancelBtn {
+	display: inline-block;
+}
+
+.budget-value {
+	font-weight: bold;
+}
+
+.budget-ok {
+	color: green;
+}
+
+.budget-negative {
+	color: red;
+}
 
 
 

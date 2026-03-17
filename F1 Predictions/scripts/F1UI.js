@@ -311,7 +311,7 @@ class F1UI {
 
         this.f1.teams.forEach((team, i) => {
             const isSelected = (this.currentTeam === i + 1) ? ' class="selectedTeam"' : '';
-            
+
             table += `<tr${isSelected}><td>${i + 1}</td>`;
             table += `<td>${team.name}</td>`;
             table += `<td>${team.id}</td>`;
@@ -324,8 +324,8 @@ class F1UI {
             table += `<td>${team.result + team.points}</td>`;
             table += `<td class="edit-controls" data-index="${i}">
                         <button class="editBtn">✏️</button>
-                        <button class="saveBtn" style="display:none;">✔️</button>
-                        <button class="cancelBtn" style="display:none;">❌</button>
+                        <button class="saveBtn">✔️</button>
+                        <button class="cancelBtn">❌</button>
                       </td>`;
             table += "</tr>";
         });
@@ -341,13 +341,12 @@ class F1UI {
         const shassisLabels = [...document.querySelectorAll("#settings div:first-child label")];
         const engineLabels = [...document.querySelectorAll("#settings div:nth-child(2) label")];
         const budgetInput = document.querySelector("#budget");
-        let currentTeam = -1;
 
         for (const team of teams) {
             team.addEventListener("click", e => {
                 const checkBoxes = [...document.querySelectorAll(".racerCheck")];
                 const firstTable = document.querySelectorAll("#predictionFirstTable tr td:nth-child(3)");
-                
+
                 checkBoxes.filter(check => check.checked).forEach(input => input.click());
                 teams.forEach(row => row.classList.remove("selectedTeam"));
 
@@ -401,38 +400,26 @@ class F1UI {
     }
 
     setEditListeners() {
-        const tableContainer = document.getElementById("teamsTable");
-        
-        if (tableContainer.dataset.listenerAttached) 
-            return;
-        
-        tableContainer.dataset.listenerAttached = "true";
-        tableContainer.addEventListener("click", (e) => {
-            const target = e.target;
-            
-            if (target.tagName !== "BUTTON") 
-                return;
+        const rows = document.querySelectorAll("#teamsTable tr:not(:first-child)");
 
-            const row = target.closest("tr");
-            const index = target.closest("td").dataset.index;
+        rows.forEach((row, index) => {
             const team = this.f1.teams[index];
-
-            const pilotsCell = row.cells[3]; // колонка Пилоты
-            const budgetCell = row.cells[6]; // колонка Бюджет
-
             const editBtn = row.querySelector(".editBtn");
             const saveBtn = row.querySelector(".saveBtn");
             const cancelBtn = row.querySelector(".cancelBtn");
-            
-            if (target.classList.contains("editBtn")) {
+            const pilotsCell = row.cells[3];
+            const budgetCell = row.cells[6];
+
+            editBtn.addEventListener("click", e => {
+                e.stopPropagation();
                 pilotsCell.dataset.originalHtml = pilotsCell.innerHTML;
                 budgetCell.dataset.originalHtml = budgetCell.innerHTML;
-
+                
                 const currentPilots = team.racers.split(" ");
                 let selectsHtml = "";
-                
+
                 for (let i = 0; i < 4; i++) {
-                    selectsHtml += `<select class="edit-pilot-select" style="display:block; margin-bottom:2px;">`;
+                    selectsHtml += `<select class="edit-pilot-select">`;
                     selectsHtml += `<option value="">--Пусто--</option>`;
                     this.f1.drivers.forEach(driver => {
                         const isSelected = currentPilots[i] === driver[0] ? "selected" : "";
@@ -440,8 +427,9 @@ class F1UI {
                     });
                     selectsHtml += `</select>`;
                 }
+
                 pilotsCell.innerHTML = selectsHtml;
-                
+
                 const originalBudget = team.budget;
                 const originalPilotsCost = currentPilots.reduce((sum, p) => {
                     const driverData = this.f1.drivers.find(d => d[0] === p);
@@ -449,32 +437,54 @@ class F1UI {
                 }, 0);
 
                 const selects = pilotsCell.querySelectorAll("select");
+                
+                const updateDisabledOptions = () => {
+                    const chosenValues = Array.from(selects)
+                        .map(s => s.value)
+                        .filter(value => value !== "");
+                    
+                    selects.forEach(select => {
+                        Array.from(select.options).forEach(option => {
+                            if (option.value === "") 
+                                return;
+                            
+                            option.disabled = chosenValues.includes(option.value) && select.value !== option.value;
+                        });
+                    });
+                };
+
+                updateDisabledOptions();
+                
                 selects.forEach(select => {
+                    select.addEventListener("click", e => e.stopPropagation());
                     select.addEventListener("change", () => {
+                        updateDisabledOptions();
                         let newPilotsCost = 0;
                         selects.forEach(s => {
                             const option = s.options[s.selectedIndex];
-                            if (option.value !== "") newPilotsCost += parseInt(option.dataset.cost);
+                            if (option.value !== "") 
+                                newPilotsCost += parseInt(option.dataset.cost);
                         });
 
                         const newBudget = originalBudget + originalPilotsCost - newPilotsCost;
-                        budgetCell.innerHTML = `<span style="color: ${newBudget < 0 ? 'red' : 'green'}; font-weight: bold;">${newBudget} + ${team.bonus}</span>`;
+                        const budgetClass = newBudget < 0 ? 'budget-negative' : 'budget-ok';
+                        budgetCell.innerHTML = `<span class="budget-value ${budgetClass}">${newBudget} + ${team.bonus}</span>`;
                         saveBtn.disabled = newBudget < 0;
                     });
                 });
-                
-                editBtn.style.display = "none";
-                saveBtn.style.display = "inline-block";
-                cancelBtn.style.display = "inline-block";
-            }
-            
-            if (target.classList.contains("saveBtn")) {
+
+                editBtn.closest('td').classList.add('is-editing');
+            });
+
+            saveBtn.addEventListener("click", e => {
+                e.stopPropagation();
                 const selects = pilotsCell.querySelectorAll("select");
                 const newPilots = [];
                 selects.forEach(s => {
-                    if (s.value !== "") newPilots.push(s.value);
+                    if (s.value !== "")
+                        newPilots.push(s.value);
                 });
-                
+
                 const originalPilotsCost = team.racers.split(" ").reduce((sum, p) => {
                     const driverData = this.f1.drivers.find(d => d[0] === p);
                     return sum + (driverData ? driverData[1] : 0);
@@ -483,22 +493,30 @@ class F1UI {
                 let newPilotsCost = 0;
                 selects.forEach(s => {
                     const option = s.options[s.selectedIndex];
-                    if (option.value !== "") newPilotsCost += parseInt(option.dataset.cost);
+                    if (option.value !== "")
+                        newPilotsCost += parseInt(option.dataset.cost);
                 });
 
                 team.budget = team.budget + originalPilotsCost - newPilotsCost;
                 team.racers = newPilots.join(" ");
                 this.f1.calculateTeamsResults();
                 this.drawTeamsTable();
-            }
-            
-            if (target.classList.contains("cancelBtn")) {
+                this.addTeamsTableListeners();
+                this.setEditListeners();
+                this.currentTeam = -1;
+
+                const newRows = document.querySelectorAll("#teamsTable tr:not(:first-child)");
+                if (newRows[index]) {
+                    newRows[index].click();
+                }
+            });
+
+            cancelBtn.addEventListener("click", e => {
+                e.stopPropagation();
                 pilotsCell.innerHTML = pilotsCell.dataset.originalHtml;
                 budgetCell.innerHTML = budgetCell.dataset.originalHtml;
-                editBtn.style.display = "inline-block";
-                saveBtn.style.display = "none";
-                cancelBtn.style.display = "none";
-            }
+                cancelBtn.closest('td').classList.remove('is-editing');
+            });
         });
     }
 }
