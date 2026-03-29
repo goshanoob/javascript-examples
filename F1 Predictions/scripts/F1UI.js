@@ -118,10 +118,14 @@ class F1UI {
         // Сохранить результаты команд.
         document.getElementById("saveTeamsResults").addEventListener("click", () => {
             let text = "";
+            const isRecalcOn = document.getElementById("recalcCommands").checked;
 
             this.f1.teams.forEach((team, i) => {
+                const finalBudget = isRecalcOn ? team.budget + team.bonus : team.budget;
+                const finalPoints = isRecalcOn ? team.result + team.points : team.points;
+                
                 text += `${i + 1}. ${team.name} ${team.id},${team.racers},${team.shassi},` +
-                    `${team.engine},${team.budget + team.bonus},${team.result + team.points}\r\n`;
+                    `${team.engine},${finalBudget},${finalPoints}\r\n`;
             });
 
             new FS().saveFile(text.slice(0, -2), "Команды");
@@ -287,10 +291,10 @@ class F1UI {
 
     // Рассчитать результаты команд и перестроить таблицу.
     calculateTeams = () => {
-        if (!document.getElementById("recalcCommands").checked) return;
-
-        // Вычислить результаты команд на этапе.
-        this.f1.calculateTeamsResults();
+        if (document.getElementById("recalcCommands").checked) {
+            // Вычислить результаты команд на этапе, иначе - просто перерисовать таблицу со старыми данными.
+            this.f1.calculateTeamsResults();
+        }
 
         // Отобразить таблицу с результатами сформированных команд, если они загружены.
         if (this.f1.teams.length !== 0) {
@@ -306,11 +310,15 @@ class F1UI {
     // Построить таблицу команд.
     drawTeamsTable() {
         let table = "<table><tr><td>#</td><td>Название</td><td>ID</td><td>Пилоты</td>\
-						<td>Шасси</td><td>Двигатель</td><td>Бюжет</td><td>Очки</td>\
+						<td>Шасси</td><td>Двигатель</td><td>Бюджет</td><td>Очки</td>\
 						<td>Прибавка</td><td>Сумма</td><td>Ред.</td></tr>";
+        const isRecalcOn = document.getElementById("recalcCommands").checked;
 
         this.f1.teams.forEach((team, i) => {
             const isSelected = (this.currentTeam === i + 1) ? ' class="selectedTeam"' : '';
+            const displayBudget = isRecalcOn ? `${team.budget} + ${team.bonus}` : `${team.budget}`;
+            const displayResult = isRecalcOn ? `${team.result}` : `-`;
+            const displaySum = isRecalcOn ? `${team.result + team.points}` : `${team.points}`;
 
             table += `<tr${isSelected}><td>${i + 1}</td>`;
             table += `<td>${team.name}</td>`;
@@ -318,10 +326,10 @@ class F1UI {
             table += `<td>${team.racers}</td>`;
             table += `<td>${team.shassi}</td>`;
             table += `<td>${team.engine}</td>`;
-            table += `<td>${team.budget} + ${team.bonus}</td>`;
+            table += `<td>${displayBudget}</td>`;
             table += `<td>${team.points}</td>`;
-            table += `<td>${team.result}</td>`;
-            table += `<td>${team.result + team.points}</td>`;
+            table += `<td>${displayResult}</td>`;
+            table += `<td>${displaySum}</td>`;
             table += `<td class="edit-controls" data-index="${i}">
                         <button class="editBtn">✏️</button>
                         <button class="saveBtn">✔️</button>
@@ -426,7 +434,7 @@ class F1UI {
             return select;
         };
 
-        
+
         rows.forEach((row, index) => {
             const team = this.f1.teams[index];
             const [editBtn, saveBtn, cancelBtn] = [".editBtn", ".saveBtn", ".cancelBtn"].map(s => row.querySelector(s));
@@ -443,7 +451,7 @@ class F1UI {
                 const pilotSelects = Array.from({length: 4}, (_, i) =>
                     buildSelect(this.f1.drivers, currentPilots[i], "--Пусто--", "edit-pilot-select")
                 );
-                
+
                 pilotSelects.forEach(s => pilotsCell.appendChild(s));
 
                 const shassiSelect = buildSelect(this.f1.shassis, team.shassi, null, "edit-component-select");
@@ -469,14 +477,30 @@ class F1UI {
                 };
 
                 const recalcBudget = () => {
-                    const newCost = pilotSelects.reduce((sum, s) => sum + (s.value ? parseInt(s.options[s.selectedIndex].dataset.cost) : 0), 0)
-                        + parseInt(shassiSelect.options[shassiSelect.selectedIndex].dataset.cost)
-                        + parseInt(engineSelect.options[engineSelect.selectedIndex].dataset.cost);
+                    let extraCost = 0;
 
-                    const newBudget = team.budget + origCost - newCost;
+                    pilotSelects.forEach(s => {
+                        const selectedPilot = s.value;
+
+                        if (selectedPilot && !currentPilots.includes(selectedPilot)) {
+                            extraCost += parseInt(s.options[s.selectedIndex].dataset.cost);
+                        }
+                    });
+
+                    if (shassiSelect.value !== team.shassi) {
+                        extraCost += parseInt(shassiSelect.options[shassiSelect.selectedIndex].dataset.cost);
+                    }
+
+                    const origEngine = team.engine || "Отсутствует";
+
+                    if (engineSelect.value !== origEngine) {
+                        extraCost += parseInt(engineSelect.options[engineSelect.selectedIndex].dataset.cost);
+                    }
+
+                    const newBudget = team.budget - extraCost;
 
                     budgetCell.replaceChildren();
-                    
+
                     const budgetSpan = document.createElement("span");
                     budgetSpan.className = `budget-value ${newBudget < 0 ? 'budget-negative' : 'budget-ok'}`;
                     budgetSpan.textContent = `${newBudget} + ${team.bonus}`;
@@ -493,7 +517,7 @@ class F1UI {
                         if (pilotSelects.includes(s)) {
                             updateDisabled();
                         }
-                        
+
                         recalcBudget();
                     });
                 });
@@ -506,20 +530,34 @@ class F1UI {
 
                 const pilotSelects = Array.from(pilotsCell.querySelectorAll("select"));
                 const newPilots = pilotSelects.map(s => s.value).filter(Boolean);
+                const currentPilots = team.racers.split(" ");
 
-                const origCost = team.racers.split(" ").reduce((sum, p) => sum + getCost(p, this.f1.drivers), 0)
-                    + getCost(team.shassi, this.f1.shassis)
-                    + getCost(team.engine, this.f1.engines);
+                let extraCost = 0;
 
-                const newCost = pilotSelects.reduce((sum, s) => sum + (s.value ? parseInt(s.options[s.selectedIndex].dataset.cost) : 0), 0)
-                    + parseInt(shassiCell.querySelector("select").options[shassiCell.querySelector("select").selectedIndex].dataset.cost)
-                    + parseInt(engineCell.querySelector("select").options[engineCell.querySelector("select").selectedIndex].dataset.cost);
+                pilotSelects.forEach(s => {
+                    const selectedPilot = s.value;
+                    
+                    if (selectedPilot && !currentPilots.includes(selectedPilot)) {
+                        extraCost += parseInt(s.options[s.selectedIndex].dataset.cost);
+                    }
+                });
+
+                const newShassi = shassiCell.querySelector("select").value;
+                
+                if (newShassi !== team.shassi) {
+                    extraCost += parseInt(shassiCell.querySelector("select").options[shassiCell.querySelector("select").selectedIndex].dataset.cost);
+                }
 
                 const newEngine = engineCell.querySelector("select").value;
+                const origEngine = team.engine || "Отсутствует";
+                
+                if (newEngine !== origEngine) {
+                    extraCost += parseInt(engineCell.querySelector("select").options[engineCell.querySelector("select").selectedIndex].dataset.cost);
+                }
 
-                team.budget = team.budget + origCost - newCost;
+                team.budget = team.budget - extraCost;
                 team.racers = newPilots.join(" ");
-                team.shassi = shassiCell.querySelector("select").value;
+                team.shassi = newShassi;
                 team.engine = newEngine === "Отсутствует" ? "" : newEngine;
 
                 this.f1.calculateTeamsResults();
@@ -541,4 +579,5 @@ class F1UI {
                 cancelBtn.closest('td').classList.remove('is-editing');
             });
         });
-    }}
+    }
+}
