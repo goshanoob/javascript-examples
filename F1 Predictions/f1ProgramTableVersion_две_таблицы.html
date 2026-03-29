@@ -6,9 +6,12 @@
     <script src="scripts/F1TwoTables.js"></script>
     <script src="scripts/F1Data.js"></script>
     <script src="scripts/F1UI.js"></script>
+    <script src="scripts/F1WebImporter.js"></script>
     <script>
-        onload = () =>
+        onload = () => {
             new F1UI().setEventListeners();
+            new F1WebImporter().init();
+        }
     </script>
 </head>
 
@@ -21,6 +24,8 @@
 <label>Скопировать таблицу: </label>
 <button id="copyFirstTable"> ></button>
 <button id="copySecondTable"> <</button>
+<button id="downloadWebResults">F1-World</button>
+<div id="webImporterLoader" class="loader hidden"></div>
 
 <div id="predictionFirstTable">
     <table>
